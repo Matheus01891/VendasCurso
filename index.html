@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black Ops Elite | Dashboard de Operações</title>
+    <title>Black Ops Elite | Operação Dominância</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
@@ -18,89 +18,84 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        /* --- BACKGROUND DE ELITE --- */
+        /* Grade de fundo para preencher o vazio */
         .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 50px 50px; z-index: -1;
+            background-image: radial-gradient(circle at 2px 2px, rgba(212,175,55,0.05) 1px, transparent 0);
+            background-size: 40px 40px; z-index: -1;
         }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- HERO ROBUSTO --- */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        
-        .system-status {
-            background: rgba(212,175,55,0.1); border: 1px solid var(--accent); padding: 8px 20px;
-            border-radius: 50px; font-size: 0.7rem; font-weight: 900; letter-spacing: 2px; color: var(--accent);
-            margin-bottom: 30px; text-transform: uppercase;
+        /* --- HERO --- */
+        .hero { 
+            min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
+            border-bottom: 1px solid #111; margin-bottom: 50px;
         }
+        .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 900; line-height: 0.8; letter-spacing: -5px; margin-bottom: 25px; }
+        .hero h1 span { color: var(--accent); text-shadow: 0 0 30px rgba(212,175,55,0.2); }
+        .hero p { max-width: 750px; font-size: 1.3rem; color: #666; font-weight: 500; }
 
-        .hero h1 { font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; line-height: 0.85; letter-spacing: -5px; margin-bottom: 20px; }
-        .hero h1 span { color: var(--accent); }
-        .hero p { max-width: 800px; font-size: 1.4rem; color: #888; line-height: 1.4; margin-bottom: 40px; }
-
-        /* --- CARDS EM LINHA (FIXOS E ROBUSTOS) --- */
-        .modules-section { padding-bottom: 100px; }
-        .modules-scroll { 
-            display: flex; gap: 30px; overflow-x: auto; padding: 20px 0;
-            scrollbar-width: none;
+        /* --- CARDS GRANDES EM LINHA (FIXOS) --- */
+        .section-modules { padding: 80px 0; }
+        .modules-container {
+            display: flex; gap: 30px; overflow-x: auto; padding: 40px 10px;
+            scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
         }
-        .modules-scroll::-webkit-scrollbar { display: none; }
+        /* Esconder scrollbar no Chrome/Safari mas manter funcional */
+        .modules-container::-webkit-scrollbar { height: 6px; }
+        .modules-container::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
         .mod-card {
-            flex: 0 0 400px; background: var(--card); border: 1px solid #222; border-radius: 40px;
-            padding: 60px 40px; transition: 0.4s; position: relative; overflow: hidden;
+            flex: 0 0 420px; /* BEM GRANDE */
+            background: var(--card); border: 1px solid #222; border-radius: 40px;
+            padding: 60px 40px; text-align: left; transition: 0.4s;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .mod-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--accent); opacity: 0; transition: 0.3s;
-        }
-        .mod-card:hover { transform: translateY(-10px); border-color: var(--accent); }
-        .mod-card:hover::before { opacity: 1; }
+        .mod-card:hover { border-color: var(--accent); transform: translateY(-10px); background: #141414; }
 
-        .emoji-img { width: 120px; height: 120px; margin-bottom: 30px; display: block; }
-        .mod-card h3 { font-size: 1.6rem; margin-bottom: 15px; letter-spacing: -1px; }
-        .mod-card p { color: #666; font-size: 1.1rem; line-height: 1.5; }
+        .emoji-img { width: 90px; height: 90px; margin-bottom: 30px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+        .mod-card h3 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 15px; letter-spacing: -1px; text-transform: uppercase; }
+        .mod-card p { color: #888; font-size: 1.05rem; line-height: 1.6; }
 
-        /* --- SEÇÃO DO VÍDEO --- */
-        .video-section { padding: 100px 0; }
-        .video-container {
-            background: #000; border: 1px solid #222; border-radius: 50px; padding: 30px;
-            max-width: 1100px; margin: 0 auto; position: relative;
+        /* --- VÍDEO --- */
+        .video-section { padding: 100px 0; background: rgba(0,0,0,0.3); }
+        .video-box {
+            max-width: 1000px; margin: 0 auto; background: #000; border: 1px solid #333;
+            border-radius: 50px; padding: 25px; box-shadow: 0 0 100px rgba(0,0,0,1);
         }
-        .video-player {
+        .player-placeholder {
             width: 100%; aspect-ratio: 16/9; background: #080808; border-radius: 30px;
             display: flex; align-items: center; justify-content: center; cursor: pointer;
-            border: 1px solid #1a1a1a;
+            border: 1px solid #1a1a1a; transition: 0.3s;
         }
-        .video-player i { font-size: 6rem; color: var(--accent); filter: drop-shadow(0 0 20px rgba(212,175,55,0.4)); }
+        .player-placeholder:hover { border-color: var(--accent); }
+        .player-placeholder i { font-size: 5rem; color: var(--accent); }
 
-        /* --- ÁREA DE CHECKOUT (LIBERA DEPOIS DO VÍDEO) --- */
-        #checkout-area { display: none; padding: 100px 0; text-align: center; opacity: 0; }
-        .price-card {
+        /* --- ÁREA DE CHECKOUT --- */
+        #checkout-area { display: none; padding: 100px 0; text-align: center; }
+        .checkout-card {
             background: #fff; color: #000; padding: 80px 40px; border-radius: 60px;
-            max-width: 700px; margin: 0 auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            max-width: 800px; margin: 0 auto;
         }
-        .btn-main {
-            background: #000; color: #fff; padding: 25px 80px; border-radius: 20px;
-            font-size: 1.6rem; font-weight: 900; text-decoration: none; display: inline-block;
-            margin-top: 30px; transition: 0.3s; border: none; cursor: pointer;
+        .btn-black {
+            background: #000; color: #fff; padding: 25px 60px; border-radius: 20px;
+            font-size: 1.5rem; font-weight: 900; text-decoration: none; display: inline-block;
+            margin-top: 30px; border: none; cursor: pointer; text-transform: uppercase;
         }
 
-        /* --- INTERFACE DE BEM-VINDO (VIP DASHBOARD) --- */
-        #vip-dashboard {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--bg); z-index: 10000; display: none; padding: 40px;
-            overflow-y: auto;
+        /* --- PÁGINA DE BEM-VINDO (PÓS-COMPRA) --- */
+        #portal-vip {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 99999; display: none; overflow-y: auto;
+            padding: 60px 20px;
         }
-        .dash-container { max-width: 1200px; margin: 0 auto; }
-        .dash-header { display: flex; align-items: center; gap: 30px; margin-bottom: 60px; border-bottom: 1px solid #222; padding-bottom: 30px; }
-        .user-avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); }
-        .dash-content h1 { font-size: 3rem; letter-spacing: -2px; }
-        .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; text-align: left; }
-        .dash-card { background: #111; border: 1px solid #222; padding: 40px; border-radius: 30px; }
-        .progress-bar { width: 100%; height: 10px; background: #222; border-radius: 10px; margin: 20px 0; }
-        .progress-fill { width: 5%; height: 100%; background: var(--accent); border-radius: 10px; }
+        .portal-header { text-align: center; margin-bottom: 60px; }
+        .portal-header h1 { font-size: 3.5rem; letter-spacing: -3px; }
+        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .portal-item { background: #111; border: 1px solid #222; border-radius: 35px; padding: 40px; }
+        .welcome-video { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--accent); }
+
     </style>
 </head>
 <body>
@@ -110,89 +105,88 @@
     <div class="container">
         
         <section class="hero">
-            <div class="system-status">● Sistema Operacional Black Ops Ativo</div>
-            <h1>A ELITE <span>INVISÍVEL</span></h1>
-            <p>Você não está aqui por acaso. O protocolo foi ativado e as ferramentas de dominação estão prontas para serem carregadas. Role e veja a estrutura.</p>
+            <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 70px; border-radius: 50%; border: 2px solid var(--accent); margin-bottom: 20px;">
+            <h1>BLACK OPS <span>ELITE</span></h1>
+            <p>O protocolo de inteligência que vai reconstruir sua percepção sobre lucro e escala. Role para baixo e acesse os módulos da operação.</p>
         </section>
 
-        <section class="modules-section">
-            <div class="modules-scroll">
+        <section class="section-modules">
+            <div class="modules-container">
                 <div class="mod-card">
                     <img src="emoji1.png" class="emoji-img">
-                    <h3>ESTRATÉGIA FANTASMA</h3>
-                    <p>Como operar abaixo do radar enquanto escala números que ninguém acredita.</p>
+                    <h3>Protocolo de Base</h3>
+                    <p>A fundação inabalável para quem deseja operar no topo da cadeia do mercado digital.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji2.png" class="emoji-img">
-                    <h3>BUNKER DIGITAL</h3>
-                    <p>A montagem da estrutura que blinda seu faturamento contra qualquer crise.</p>
+                    <h3>Arquitetura Tática</h3>
+                    <p>Como desenhar ofertas que ignoram a resistência do cliente e forçam a conversão.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji3.png" class="emoji-img">
-                    <h3>ENGENHARIA SOCIAL</h3>
-                    <p>Táticas de influência que tornam sua oferta a única opção lógica na mente do cliente.</p>
+                    <h3>Engenharia de Lucro</h3>
+                    <p>Onde o dinheiro realmente é feito. Ajustes finos que multiplicam seu ROI em 10x.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji4.png" class="emoji-img">
-                    <h3>ALAVANCAGEM BRUTA</h3>
-                    <p>O segredo da multiplicação: como transformar pequenos ativos em fortunas reais.</p>
+                    <h3>Escala Fantasma</h3>
+                    <p>O segredo para crescer sem ser notado pela concorrência. Domine o seu nicho em silêncio.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji5.png" class="emoji-img">
-                    <h3>DOMÍNIO FINAL</h3>
-                    <p>A automação do sucesso. Onde o operador se torna o dono da rede.</p>
+                    <h3>Dominação Final</h3>
+                    <p>A transição de operador para dono da rede. Automação total da sua liberdade.</p>
                 </div>
             </div>
         </section>
 
         <section class="video-section">
-            <div class="video-container">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 900; font-size: 0.8rem;">
-                    <span>CONEXÃO_SEGURA_V4.SEC</span>
-                    <span style="color: var(--accent);">STATUS: AGUARDANDO PLAYER</span>
+            <div class="video-box">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 900; font-size: 0.7rem; letter-spacing: 2px; color: var(--accent);">
+                    <span>● CONEXÃO_ESTÁVEL</span>
+                    <span>SISTEMA: PRONTO</span>
                 </div>
-                <div class="video-player" onclick="startCountdown()">
+                <div class="player-placeholder" onclick="startTimer()">
                     <i class="fa-solid fa-play"></i>
                 </div>
             </div>
         </section>
 
         <section id="checkout-area">
-            <div class="price-card">
-                <h2 style="font-size: 3rem; font-weight: 900;">ACESSO CONCEDIDO</h2>
-                <p style="font-size: 1.2rem; color: #666; margin: 20px 0;">O valor da sua nova vida é simbólico.</p>
-                <div style="font-size: 4rem; font-weight: 900; color: var(--accent);">R$ 29,90</div>
-                <button onclick="finishPurchase()" class="btn-main">LIBERAR MEU ACESSO AGORA</button>
+            <div class="checkout-card">
+                <h2 style="font-size: 3rem; font-weight: 900; letter-spacing: -2px;">ACESSO AUTORIZADO</h2>
+                <p style="color: #666; font-size: 1.2rem; margin: 20px 0;">O bunker da elite está pronto para te receber.</p>
+                <div style="font-size: 4.5rem; font-weight: 900; color: var(--accent);">R$ 29,90</div>
+                <button onclick="showPortal()" class="btn-black">Entrar para a Elite Agora</button>
             </div>
         </section>
 
     </div>
 
-    <div id="vip-dashboard">
-        <div class="dash-container">
-            <div class="dash-header">
-                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" class="user-avatar">
-                <div class="dash-content">
-                    <h1>Seja bem-vindo, <span>Operador.</span></h1>
-                    <p style="color: var(--accent); font-weight: 900;">SUA JORNADA DE ELITE COMEÇA AGORA.</p>
-                </div>
+    <div id="portal-vip">
+        <div class="portal-header">
+            <h1>O SUCESSO É UMA <span>DECISÃO.</span></h1>
+            <p style="color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-top: 10px;">VOCÊ FEZ A ESCOLHA CERTA. BEM-VINDO À OPERAÇÃO.</p>
+        </div>
+
+        <div class="portal-grid">
+            <div class="portal-item">
+                <h3 style="margin-bottom: 20px; color: var(--accent);">SUA PRIMEIRA MISSÃO</h3>
+                <video class="welcome-video" autoplay muted controls>
+                    <source src="video-bem-vindo.mp4" type="video/mp4">
+                </video>
+                <p style="color: #888; font-size: 0.9rem;">Assista ao vídeo de integração ou prossiga para os módulos abaixo.</p>
+                <button class="btn-black" style="width: 100%; margin-top: 30px;">ACESSAR TODAS AS AULAS</button>
             </div>
 
-            <div class="dash-grid">
-                <div class="dash-card">
-                    <h2 style="margin-bottom: 20px;">Protocolo de Integração</h2>
-                    <p style="color: #888;">Você fez a escolha que 99% das pessoas têm medo de fazer. Aqui dentro, não trabalhamos com sorte, trabalhamos com dados, estratégia e execução fria.</p>
-                    <div class="progress-bar"><div class="progress-fill"></div></div>
-                    <span style="font-size: 0.8rem; font-weight: 900; color: var(--accent);">5% CONCLUÍDO - AGUARDANDO PRIMEIRA AULA</span>
-                    
-                    <button class="btn-main" style="width: 100%; margin-top: 40px; background: var(--accent); color: #000;">ASSISTIR AULA DE BOAS-VINDAS</button>
+            <div class="portal-item" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 20px;">SEU SUPORTE TÁTICO</h3>
+                    <p style="color: #666; margin-bottom: 30px;">Não caminhe sozinho. Nossa equipe de elite está pronta para te auxiliar na implementação de cada estratégia.</p>
                 </div>
-
-                <div class="dash-card" style="display: flex; flex-direction: column; gap: 20px;">
-                    <h3 style="color: var(--accent);">Suporte Tático</h3>
-                    <p style="font-size: 0.9rem; color: #666;">Dúvidas sobre a operação? Nosso time está de prontidão 24/7 no canal encriptado.</p>
-                    <a href="#" style="color: #fff; text-decoration: none; font-weight: 900;">> ACESSAR COMUNIDADE BLACK</a>
-                    <a href="#" style="color: #fff; text-decoration: none; font-weight: 900;">> SUPORTE DIRETO VIA WHATSAPP</a>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <a href="#" style="background: #25d366; color: #000; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 900;">WHATSAPP VIP</a>
+                    <a href="#" style="background: #0088cc; color: #fff; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 900;">COMUNIDADE TELEGRAM</a>
                 </div>
             </div>
         </div>
@@ -203,30 +197,20 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Animação dos cards ao rolar
-        gsap.from(".mod-card", {
-            scrollTrigger: { trigger: ".modules-scroll", start: "top 80%" },
-            opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power4.out"
-        });
-
-        // Simula o tempo do vídeo (Coloquei 3s para teste)
-        function startCountdown() {
-            alert("Vídeo Iniciado. O bglh vai carregar em instantes...");
+        // Timer do Vídeo (Configure para 1:18 ou o tempo que quiser)
+        function startTimer() {
+            alert("O vídeo começou. Aguarde o sinal para liberar o checkout.");
             setTimeout(() => {
                 const checkout = document.getElementById('checkout-area');
                 checkout.style.display = 'block';
-                gsap.to(checkout, { opacity: 1, y: -20, duration: 1 });
-                lenis.scrollTo('#checkout-area');
-            }, 3000); 
+                lenis.scrollTo('#checkout-area', { lerp: 0.05 });
+            }, 3000); // 3 segundos para você testar, mude para 78000 para 1:18
         }
 
-        // Simula a compra e abre o Dashboard de Boas-vindas
-        function finishPurchase() {
-            const dash = document.getElementById('vip-dashboard');
-            dash.style.display = 'block';
-            gsap.from(dash, { opacity: 0, scale: 1.1, duration: 1, ease: "power4.out" });
+        // Abre o portal de boas-vindas elegante
+        function showPortal() {
+            document.getElementById('portal-vip').style.display = 'block';
+            gsap.from("#portal-vip", { opacity: 0, scale: 0.9, duration: 0.8, ease: "power4.out" });
         }
     </script>
 </body>
