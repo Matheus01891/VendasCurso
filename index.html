@@ -14,51 +14,67 @@
 
     <style>
         :root { --accent: #d4af37; --bg: #050505; --card: #0f0f0f; }
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
         /* --- HERO --- */
-        .hero { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -3px; line-height: 1; }
+        .hero { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -3px; }
         .hero h1 span { color: var(--accent); }
-        .hero p { color: #666; font-size: 1.2rem; margin-top: 20px; max-width: 650px; }
+        .hero p { color: #666; font-size: 1.2rem; margin-top: 20px; max-width: 600px; }
 
-        /* --- MÓDULOS (7 CARDS EM LINHA) --- */
-        .section-modules { padding: 60px 0; }
-        .modules-wrapper { 
-            display: flex; gap: 20px; overflow-x: auto; padding: 30px 10px;
-            scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
+        /* --- OS 5 CARDS (VISÍVEIS SEM SCROLL) --- */
+        .section-modules { padding: 40px 0; }
+        .modules-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); /* 5 colunas fixas */
+            gap: 15px; 
         }
         .mod-card {
-            flex: 0 0 350px; background: var(--card); border: 1px solid #1a1a1a;
-            border-radius: 35px; padding: 50px 30px; transition: 0.3s;
+            background: var(--card); border: 1px solid #1a1a1a;
+            border-radius: 25px; padding: 40px 20px; text-align: center; transition: 0.3s;
         }
-        .mod-card:hover { border-color: var(--accent); transform: translateY(-10px); }
-        .emoji-img { width: 80px; height: 80px; margin-bottom: 25px; }
-        .mod-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
-        .mod-card p { font-size: 0.95rem; color: #555; line-height: 1.5; }
+        .mod-card:hover { border-color: var(--accent); background: #111; }
+        .emoji-img { width: 70px; height: 70px; margin-bottom: 20px; }
+        .mod-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #fff; font-weight: 800; }
+        .mod-card p { font-size: 0.85rem; color: #555; line-height: 1.4; }
 
-        /* --- FAQ --- */
-        .faq-section { padding: 100px 0; max-width: 900px; margin: 0 auto; }
-        .faq-item { background: #0a0a0a; border: 1px solid #222; border-radius: 20px; margin-bottom: 15px; overflow: hidden; }
-        .faq-question { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 700; }
-        .faq-answer { padding: 0 25px 25px; color: #777; display: none; }
+        /* --- FAQ ROBUSTO --- */
+        .faq-section { padding: 100px 0; max-width: 1000px; margin: 0 auto; }
+        .faq-header { text-align: center; margin-bottom: 50px; }
+        .faq-item { background: #080808; border: 1px solid #151515; border-radius: 15px; margin-bottom: 10px; transition: 0.3s; }
+        .faq-item:hover { border-color: #333; }
+        .faq-question { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+        .faq-answer { padding: 0 25px 25px; color: #666; display: none; border-top: 1px solid #111; padding-top: 20px; line-height: 1.6; }
+        .faq-question i { color: var(--accent); font-size: 0.8rem; }
 
-        /* --- VIDEO --- */
-        .video-box { background: #000; border: 1px solid #333; border-radius: 40px; padding: 20px; margin: 50px 0; }
-        .player { width: 100%; aspect-ratio: 16/9; background: #080808; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        /* --- SUPORTE DISCRETO (FLUTUANTE) --- */
+        .support-fixed {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            background: #111; border: 1px solid #222; padding: 12px 20px;
+            border-radius: 50px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: 0.3s; text-decoration: none; color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .support-fixed:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .dot { width: 8px; height: 8px; background: #25d366; border-radius: 50%; box-shadow: 0 0 10px #25d366; }
 
-        /* --- PORTAL DE BOAS-VINDAS (POS-COMPRA) --- */
+        /* --- VIDEO & CHECKOUT --- */
+        .video-box { background: #000; border: 1px solid #222; border-radius: 40px; padding: 20px; margin: 60px 0; }
+        .player { width: 100%; aspect-ratio: 16/9; background: #050505; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* --- PORTAL PÓS-COMPRA (MODERNO) --- */
         #onboarding-portal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #050505; z-index: 10000; display: none; overflow-y: auto; padding: 40px 20px;
+            background: #050505; z-index: 10000; display: none; overflow-y: auto; padding: 60px 20px;
         }
-        .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
-        .step-card { background: #111; border: 1px solid #222; padding: 35px; border-radius: 30px; }
-        .btn-tech { background: var(--accent); color: #000; padding: 18px 30px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; margin-top: 20px; border: none; cursor: pointer; }
-        .status-dot { width: 10px; height: 10px; background: #25d366; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #25d366; }
+        .portal-content { max-width: 1100px; margin: 0 auto; }
+        .portal-card { background: #0f0f0f; border: 1px solid #1a1a1a; padding: 40px; border-radius: 30px; margin-bottom: 25px; }
+        .btn-action { background: var(--accent); color: #000; padding: 18px 40px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
+
+        @media (max-width: 1024px) { .modules-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -66,84 +82,105 @@
     <div class="container">
         <section class="hero">
             <h1>SISTEMA <span>THEUS</span></h1>
-            <p>A estrutura completa para sua operação digital. Veja abaixo os módulos configurados e o suporte técnico disponível.</p>
+            <p>Acesso técnico à estrutura de operações. Tudo o que você precisa em um único ambiente de trabalho.</p>
         </section>
 
         <section class="section-modules">
-            <div class="modules-wrapper">
-                <div class="mod-card"> <img src="emoji1.png" class="emoji-img"> <h3>MÓDULO 01</h3> <p>Configuração inicial e mentalidade de negócio.</p> </div>
-                <div class="mod-card"> <img src="emoji2.png" class="emoji-img"> <h3>MÓDULO 02</h3> <p>Instalação das ferramentas e softwares necessários.</p> </div>
-                <div class="mod-card"> <img src="emoji3.png" class="emoji-img"> <h3>MÓDULO 03</h3> <p>Primeiros passos na operação prática.</p> </div>
-                <div class="mod-card"> <img src="emoji4.png" class="emoji-img"> <h3>MÓDULO 04</h3> <p>Otimização de processos e automação.</p> </div>
-                <div class="mod-card"> <img src="emoji5.png" class="emoji-img"> <h3>MÓDULO 05</h3> <p>Escalando o volume de operações diárias.</p> </div>
-                <div class="mod-card"> <img src="emoji6.png" class="emoji-img"> <h3>MÓDULO 06</h3> <p>Gestão financeira e reinvestimento tático.</p> </div>
-                <div class="mod-card"> <img src="emoji7.png" class="emoji-img"> <h3>MÓDULO 07</h3> <p>Manutenção e suporte de longo prazo.</p> </div>
+            <div class="modules-grid">
+                <div class="mod-card">
+                    <img src="emoji1.png" class="emoji-img">
+                    <h3>CONFIGURAÇÃO</h3>
+                    <p>Preparação total do ambiente e diretrizes iniciais do projeto.</p>
+                </div>
+                <div class="mod-card">
+                    <img src="emoji2.png" class="emoji-img">
+                    <h3>ARQUIVOS</h3>
+                    <p>Acesso direto aos pacotes de dados e bibliotecas de execução.</p>
+                </div>
+                <div class="mod-card">
+                    <img src="emoji3.png" class="emoji-img">
+                    <h3>AULAS PRÁTICAS</h3>
+                    <p>Treinamento em vídeo sobre a execução técnica de cada etapa.</p>
+                </div>
+                <div class="mod-card">
+                    <img src="emoji4.png" class="emoji-img">
+                    <h3>OPERAÇÃO</h3>
+                    <p>O fluxo de trabalho diário para manter o sistema rodando.</p>
+                </div>
+                <div class="mod-card">
+                    <img src="emoji5.png" class="emoji-img">
+                    <h3>EXPANSÃO</h3>
+                    <p>Como escalar a estrutura e aumentar o volume de resultados.</p>
+                </div>
             </div>
         </section>
 
         <div class="video-box">
             <div class="player" onclick="revealCheckout()">
-                <i class="fa-solid fa-play" style="font-size: 5rem; color: var(--accent);"></i>
+                <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
             </div>
         </div>
 
         <section class="faq-section">
-            <h2 style="text-align: center; margin-bottom: 40px;">DÚVIDAS FREQUENTES</h2>
+            <div class="faq-header">
+                <h2 style="font-size: 2.5rem; letter-spacing: -1px;">CENTRAL DE DÚVIDAS</h2>
+                <p style="color: #444; margin-top: 10px;">Informações técnicas sobre o acesso e funcionamento.</p>
+            </div>
+            
             <div class="faq-item">
-                <div class="faq-question">Preciso de um computador potente? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Não. O sistema foi desenhado para rodar em qualquer dispositivo com acesso à internet.</div>
+                <div class="faq-question">O acesso aos arquivos é vitalício? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Sim. Uma vez adquirido, você terá acesso a todas as aulas e atualizações de arquivos sem cobranças adicionais.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Como recebo o acesso? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Imediatamente após a confirmação, você será redirecionado para o painel de integração.</div>
+                <div class="faq-question">Preciso baixar algum software específico? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Todas as aulas explicam o que deve ser utilizado. Fornecemos os links e arquivos necessários dentro da área de membros.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Tem suporte para iniciantes? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Sim, temos técnicos e administradores disponíveis em horário comercial para te auxiliar.</div>
+                <div class="faq-question">Como funciona o suporte técnico? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Temos uma equipe de administradores pronta para resolver qualquer problema de acesso ou dúvida técnica via canal direto.</div>
             </div>
         </section>
 
-        <div id="checkout-trigger" style="display: none; text-align: center; padding: 50px;">
-            <button onclick="simularCompra()" class="btn-tech" style="font-size: 1.5rem; padding: 25px 60px;">ADQUIRIR ACESSO AO SISTEMA</button>
+        <div id="checkout-trigger" style="display: none; text-align: center; padding-bottom: 100px;">
+            <button onclick="simularCompra()" class="btn-action" style="font-size: 1.5rem;">LIBERAR MEU ACESSO AGORA</button>
         </div>
     </div>
 
+    <a href="https://wa.me/SEUNUMERO" class="support-fixed">
+        <span class="dot"></span>
+        <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">SUPORTE TÉCNICO</span>
+    </a>
+
     <div id="onboarding-portal">
-        <div class="container" style="max-width: 1000px;">
-            <h1 style="font-size: 3rem; margin-bottom: 10px;">SEJA BEM-VINDO.</h1>
-            <p style="color: #888;">Siga as instruções abaixo para começar sua configuração.</p>
+        <div class="portal-content">
+            <div style="margin-bottom: 40px;">
+                <h1 style="font-size: 3rem;">ACESSO AO CONTEÚDO</h1>
+                <p style="color: #666;">Siga as diretrizes abaixo para iniciar sua operação.</p>
+            </div>
 
-            <div class="step-grid">
-                <div class="step-card" style="grid-column: span 2;">
-                    <video style="width: 100%; border-radius: 20px; border: 1px solid #333;" controls autoplay muted>
-                        <source src="boas-vindas.mp4" type="video/mp4">
-                    </video>
-                    <h3 style="margin-top: 20px;">Instruções Iniciais</h3>
-                    <p style="color: #666;">Assista ao vídeo para entender como navegar no sistema.</p>
+            <div class="portal-card">
+                <video style="width: 100%; border-radius: 15px; border: 1px solid #222;" controls autoplay muted>
+                    <source src="aula-boas-vindas.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="portal-card">
+                    <h3>BIBLIOTECA DE AULAS</h3>
+                    <p style="margin: 15px 0; color: #555;">Assista aos vídeos explicativos e entenda a lógica do sistema.</p>
+                    <a href="#" class="btn-action">ASSISTIR AULAS</a>
                 </div>
-
-                <div class="step-card">
-                    <h3 style="color: var(--accent);">PRÓXIMOS PASSOS</h3>
-                    <ul style="list-style: none; margin-top: 20px; color: #888; line-height: 2;">
-                        <li><i class="fa-solid fa-check color: var(--accent)"></i> Baixar o App Oficial</li>
-                        <li><i class="fa-solid fa-check"></i> Validar seu Token de Acesso</li>
-                        <li><i class="fa-solid fa-check"></i> Entrar no Grupo de Avisos</li>
-                    </ul>
-                    <a href="#" class="btn-tech" style="width: 100%; text-align: center;">BAIXAR APLICATIVO</a>
-                </div>
-
-                <div class="step-card">
-                    <h3>SUPORTE TÉCNICO</h3>
-                    <p style="color: #666; margin: 15px 0;">Fale agora com um de nossos administradores para tirar dúvidas técnicas.</p>
-                    <div style="margin-bottom: 20px;">
-                        <span class="status-dot"></span> <small>TÉCNICOS ONLINE AGORA</small>
-                    </div>
-                    <a href="https://wa.me/SEUNUMERO" class="btn-tech" style="background: #25d366; color: #fff; width: 100%; text-align: center;">FALAR COM ADMINISTRADOR</a>
+                <div class="portal-card">
+                    <h3>DOWNLOAD DE ARQUIVOS</h3>
+                    <p style="margin: 15px 0; color: #555;">Baixe os pacotes necessários para configurar sua máquina.</p>
+                    <a href="#" class="btn-action" style="background: #222; color: #fff;">BAIXAR PACOTES</a>
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 50px;">
-                <button onclick="document.getElementById('onboarding-portal').style.display='none'" style="background: none; border: none; color: #444; cursor: pointer; font-weight: 700;">SAIR DO PAINEL</button>
+
+            <div class="portal-card" style="text-align: center;">
+                <h3>DIFICULDADES TÉCNICAS?</h3>
+                <p style="margin: 15px 0; color: #555;">Nossos administradores e técnicos estão disponíveis para te ajudar na instalação.</p>
+                <a href="#" class="btn-action" style="background: #25d366; color: #fff;">FALAR COM UM TÉCNICO</a>
             </div>
         </div>
     </div>
@@ -153,27 +190,33 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // FAQ Toggle
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                const answer = q.nextElementSibling;
-                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        // FAQ Interativo
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.nextElementSibling;
+                const icon = item.querySelector('i');
+                const isOpen = answer.style.display === 'block';
+                
+                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                document.querySelectorAll('.faq-question i').forEach(i => i.className = 'fa-solid fa-plus');
+
+                if (!isOpen) {
+                    answer.style.display = 'block';
+                    icon.className = 'fa-solid fa-minus';
+                }
             });
         });
 
-        // Simulação do tempo do vídeo para liberar checkout
         function revealCheckout() {
-            alert("O vídeo iniciou. O botão de compra aparecerá em breve.");
             setTimeout(() => {
                 document.getElementById('checkout-trigger').style.display = 'block';
                 lenis.scrollTo('#checkout-trigger');
-            }, 3000); // 3 segundos para teste
+            }, 2000); 
         }
 
-        // Simulação de Compra
         function simularCompra() {
             document.getElementById('onboarding-portal').style.display = 'block';
-            gsap.from(".step-card", { y: 50, opacity: 0, stagger: 0.1, duration: 1 });
+            window.scrollTo(0,0);
         }
     </script>
 </body>
