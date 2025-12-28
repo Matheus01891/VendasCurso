@@ -3,171 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Theus | Operação de Elite</title>
-    
+    <title>Sistema Theus | Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-
     <style>
-        :root { --accent: #d4af37; --bg: #050505; --card: #0a0a0a; --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f9e295 100%); }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
+        :root { --gold: #d4af37; --bg: #050505; --card: #0d0d0d; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        /* HEADER */
+        .header { margin-bottom: 60px; }
+        .header h1 { font-size: 3rem; font-weight: 900; text-transform: uppercase; }
+        .header h1 span { color: var(--gold); }
+        .header p { color: #888; margin-top: 10px; font-size: 1.1rem; }
 
-        /* --- HEADER STATUS --- */
-        .status-header { background: #0a0a0a; border-bottom: 1px solid #111; padding: 12px; text-align: center; font-size: 0.65rem; font-weight: 900; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
+        /* GRID DE MÓDULOS ORIGINAIS */
+        .grid-modulos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 50px; }
+        .card { background: var(--card); border: 1px solid #1a1a1a; padding: 30px 15px; border-radius: 20px; transition: 0.3s; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card-emoji { font-size: 2rem; margin-bottom: 15px; display: block; }
+        .card h3 { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; color: #fff; }
+        .card p { font-size: 0.75rem; color: #666; font-weight: 500; }
 
-        /* --- HERO --- */
-        .hero { padding: 60px 0; text-align: center; }
-        .hero img { width: 80px; border-radius: 50%; border: 2px solid var(--accent); margin-bottom: 20px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; letter-spacing: -3px; line-height: 0.9; text-transform: uppercase; }
-        .hero h1 span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: #555; font-size: 1.1rem; margin-top: 20px; max-width: 600px; margin-inline: auto; font-weight: 600; }
+        /* VIDEO */
+        .video-box { background: #000; border: 1px solid #1a1a1a; border-radius: 30px; padding: 10px; margin-bottom: 50px; position: relative; }
+        .video-box video { width: 100%; border-radius: 20px; display: block; }
 
-        /* --- GRID DE CARDS AUTORITÁRIOS --- */
-        .modules-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 50px; }
-        .mod-card { background: var(--card); border: 1px solid #151515; border-radius: 20px; padding: 35px 15px; text-align: center; transition: 0.4s; }
-        .mod-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .mod-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; display: block; }
-        .mod-card h3 { font-size: 0.85rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-        .mod-card p { font-size: 0.75rem; color: #444; line-height: 1.4; font-weight: 600; }
+        /* PROTEÇÃO */
+        .protecao { background: #0d0d0d; border-radius: 25px; padding: 40px; margin-bottom: 50px; border: 1px solid #151515; }
+        .protecao h2 { font-weight: 900; margin-bottom: 10px; font-size: 1.4rem; }
+        .protecao p { color: #555; font-size: 0.9rem; }
 
-        /* --- VIDEO --- */
-        .video-container { margin: 60px 0; background: #000; border: 1px solid #1a1a1a; border-radius: 40px; padding: 15px; }
-        .video-placeholder { width: 100%; aspect-ratio: 16/9; background: #030303; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        /* BOTÃO DE COMPRA */
+        .btn-compra { 
+            display: inline-block; background: var(--gold); color: #000; padding: 22px 50px; 
+            border-radius: 15px; font-weight: 900; text-decoration: none; font-size: 1.1rem;
+            text-transform: uppercase; transition: 0.3s; margin-bottom: 80px;
+        }
+        .btn-compra:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); }
 
-        /* --- PROTEÇÃO (SEM TESTE GRÁTIS) --- */
-        .protecao-box { background: #0a0a0a; border: 1px solid #111; border-radius: 25px; padding: 40px; text-align: center; margin-bottom: 60px; }
-        .protecao-box h2 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
-        .protecao-box p { color: #666; font-size: 0.9rem; max-width: 600px; margin: 0 auto; }
+        /* BOTÃO FLUTUANTE DE SUPORTE (PISCANDO) */
+        .suporte-flutuante {
+            position: fixed; bottom: 20px; right: 20px; background: #000; border: 1px solid #1a1a1a;
+            padding: 12px 20px; border-radius: 50px; display: flex; align-items: center; gap: 10px;
+            text-decoration: none; color: #fff; font-size: 0.75rem; font-weight: 800; z-index: 9999;
+        }
+        .ping { width: 10px; height: 10px; background: #00ff00; border-radius: 50%; position: relative; }
+        .ping::after {
+            content: ''; position: absolute; width: 100%; height: 100%; background: #00ff00;
+            border-radius: 50%; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
 
-        /* --- BOTÃO HELP ME (ADMINS) --- */
-        .help-center { background: linear-gradient(to right, #0a0a0a, #111); border: 1px solid #222; border-radius: 20px; padding: 30px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px; }
-        .help-text h4 { font-weight: 900; font-size: 1.1rem; }
-        .help-text p { color: #555; font-size: 0.85rem; }
-        .btn-sos { background: #ff3e3e; color: #fff; padding: 15px 30px; border-radius: 10px; font-weight: 900; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; }
-
-        /* --- FAQ GIGANTE --- */
-        .faq-section { padding-bottom: 100px; }
-        .faq-item { background: #0a0a0a; border: 1px solid #151515; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { padding: 25px; cursor: pointer; font-weight: 800; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
-        .faq-answer { padding: 0 25px 25px; color: #555; display: none; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
-
-        /* --- BOTÃO FINAL --- */
-        .btn-final { background: var(--gold-gradient); color: #000; padding: 25px 60px; border-radius: 15px; font-weight: 900; font-size: 1.2rem; text-decoration: none; display: inline-block; text-transform: uppercase; border: none; cursor: pointer; }
-
-        @media (max-width: 800px) { .modules-grid { grid-template-columns: 1fr; } .help-center { flex-direction: column; text-align: center; gap: 20px; } }
+        @media (max-width: 600px) { .header h1 { font-size: 2rem; } .grid-modulos { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
-    <div class="status-header">Operação Ativa: Protocolos de Segurança Nível 5</div>
-
     <div class="container">
-        
-        <section class="hero">
-            <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg">
-            <h1>DOMÍNIO <span>THEUS</span></h1>
-            <p>Infraestrutura blindada para processamento de ativos digitais. Execute com autoridade.</p>
-        </section>
+        <header class="header">
+            <h1>SISTEMA <span>THEUS</span></h1>
+            <p>Acesso técnico à estrutura de operações. Tudo em um único ambiente.</p>
+        </header>
 
-        <div class="modules-grid">
-            <div class="mod-card">
-                <i class="fa-solid fa-vault"></i>
-                <h3>ARQUITETURA</h3>
-                <p>Estrutura inabalável para recepção e gestão de dados.</p>
+        <div class="grid-modulos">
+            <div class="card">
+                <span class="card-emoji">💡</span>
+                <h3>CONFIGURAÇÃO</h3>
+                <p>Preparação total do ambiente e diretrizes iniciais.</p>
             </div>
-            <div class="mod-card">
-                <i class="fa-solid fa-microchip"></i>
-                <h3>REPOSITÓRIO</h3>
-                <p>Banco de ativos de alta performance para execução imediata.</p>
+            <div class="card">
+                <span class="card-emoji">📦</span>
+                <h3>ARQUIVOS</h3>
+                <p>Acesso direto aos pacotes de dados e bibliotecas.</p>
             </div>
-            <div class="mod-card">
-                <i class="fa-solid fa-shield-check"></i>
-                <h3>DIRETRIZES</h3>
-                <p>Protocolos de segurança para operação sem rastreabilidade.</p>
+            <div class="card">
+                <span class="card-emoji">🛍️</span>
+                <h3>AULAS PRÁTICAS</h3>
+                <p>Treinamento em vídeo sobre a execução técnica.</p>
             </div>
-            <div class="mod-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>LOGÍSTICA</h3>
-                <p>Fluxo otimizado para escala industrial de resultados.</p>
+            <div class="card">
+                <span class="card-emoji">💎</span>
+                <h3>OPERAÇÃO</h3>
+                <p>O fluxo de trabalho diário para manter o sistema.</p>
             </div>
-            <div class="mod-card">
-                <i class="fa-solid fa-crown"></i>
-                <h3>SOBERANIA</h3>
-                <p>Domínio completo do ecossistema de lucros digitais.</p>
+            <div class="card">
+                <span class="card-emoji">📈</span>
+                <h3>EXPANSÃO</h3>
+                <p>Como escalar a estrutura e aumentar os resultados.</p>
             </div>
         </div>
 
-        <div class="video-container">
-            <div class="video-placeholder" onclick="revealBtn()">
-                <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
-            </div>
+        <div class="video-box">
+            <video controls poster="thumb.jpg">
+                <source src="video.mp4" type="video/mp4">
+            </video>
         </div>
 
-        <div class="help-center">
-            <div class="help-text">
-                <h4>SUPORTE DOS ADMINISTRADORES</h4>
-                <p>Nossa cúpula técnica está online para garantir sua implementação.</p>
-            </div>
-            <a href="https://wa.me/SEUNUMERO" class="btn-sos">Solicitar Auxílio Técnico</a>
-        </div>
-
-        <div class="protecao-box">
+        <div class="protecao">
             <h2>PROTEÇÃO DE TRANSAÇÃO</h2>
-            <p>Acesso garantido e blindado. Implementamos os mais altos padrões de criptografia para que sua operação comece com segurança total desde o primeiro segundo.</p>
+            <p>Acesso garantido e blindado. Implementamos os mais altos padrões de segurança para sua operação.</p>
         </div>
 
-        <section class="faq-section">
-            <h2 style="text-align: center; margin-bottom: 40px; font-weight: 900;">PERGUNTAS TÉCNICAS</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">O acesso é vitalício? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Sim. Uma vez autorizada a sua licença, o repositório e todas as futuras atualizações de segurança são suas para sempre.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Como recebo os arquivos? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Imediatamente. O sistema libera o download dos pacotes e o acesso aos protocolos em vídeo no instante da confirmação.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Posso operar sem experiência? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">O sistema foi desenhado para ser autoexecutável. Basta seguir as diretrizes passo a passo.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Terei ajuda se travar? <i class="fa-solid fa-chevron-down"></i></div>
-                <div class="faq-answer">Sim. O botão de suporte aos administradores serve justamente para que nenhum operador fique para trás.</div>
-            </div>
-        </section>
-
-        <div id="cta-final" style="display: none; text-align: center; padding-bottom: 100px;">
-            <a href="SEU_LINK_CHECKOUT" class="btn-final">ADQUIRIR LICENÇA DE COMANDO</a>
-        </div>
-
+        <a href="SEU_LINK_DE_CHECKOUT_AQUI" class="btn-compra">ADQUIRIR LICENÇA DE COMANDO</a>
     </div>
 
-    <script>
-        const lenis = new Lenis();
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
-
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                const answer = q.nextElementSibling;
-                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-
-        function revealBtn() {
-            setTimeout(() => {
-                document.getElementById('cta-final').style.display = 'block';
-                window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-            }, 1500);
-        }
-    </script>
+    <a href="https://wa.me/SEUNUMERO" class="suporte-flutuante">
+        <div class="ping"></div>
+        SUPORTE TÉCNICO
+    </a>
 
 </body>
 </html>
