@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black Ops Elite | Operação Dominância</title>
+    <title>Black Ops Elite | Dashboard de Operações</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -13,160 +13,188 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 
     <style>
-        :root { 
-            --accent: #d4af37; 
-            --bg-page: #050505; 
-            --card-dark: #0f0f0f;
-            --text-gold: #c5a02e;
-        }
+        :root { --accent: #d4af37; --bg: #050505; --card: #0f0f0f; }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: #fff; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-
-        /* --- HERO --- */
-        .section-hero {
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-        }
-
-        .hero-banner h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -4px; line-height: 0.9; }
-        .hero-banner h1 span { color: var(--accent); text-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
-        .hero-banner p { color: #555; margin: 30px auto; max-width: 700px; font-size: 1.3rem; font-weight: 500; letter-spacing: 1px; }
-
-        /* Indicador de Scroll Nobre */
-        .scroll-indicator {
-            margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 10px;
-            color: var(--accent); font-size: 0.7rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
-        }
-        .mouse { width: 20px; height: 35px; border: 2px solid var(--accent); border-radius: 20px; position: relative; }
-        .mouse::before { content: ''; position: absolute; top: 5px; left: 50%; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); animation: scroll 2s infinite; }
-        @keyframes scroll { 0% { opacity: 1; top: 5px; } 100% { opacity: 0; top: 25px; } }
-
-        /* --- MÓDULOS (ESTILO OXBAR - LINHA ÚNICA) --- */
-        .section-modules { padding: 100px 0; }
-        .modules-wrapper { 
-            display: flex; gap: 25px; overflow-x: auto; padding: 40px 0;
-            scrollbar-width: none; -ms-overflow-style: none;
-        }
-        .modules-wrapper::-webkit-scrollbar { display: none; }
-        
-        .mod-card {
-            flex: 0 0 380px; /* Card maior e robusto */
-            background: var(--card-dark); border-radius: 40px; padding: 60px 40px;
-            text-align: center; border: 1px solid #1a1a1a;
-            transition: all 0.5s ease; position: relative;
-        }
-        .mod-card:hover { border-color: var(--accent); background: #141414; transform: translateY(-10px); }
-        
-        .emoji-img { width: 100px; height: 100px; margin-bottom: 30px; object-fit: contain; }
-        .mod-card h3 { font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 15px; letter-spacing: -1px; }
-        .mod-card p { font-size: 1rem; color: #666; line-height: 1.6; font-weight: 400; }
-
-        /* --- VÍDEO --- */
-        .section-video { padding: 100px 0; }
-        .video-card {
-            background: #000; border-radius: 50px; padding: 20px; border: 1px solid #222;
-            max-width: 1000px; margin: 0 auto; box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-        }
-        .v-player {
-            width: 100%; aspect-ratio: 16/9; background: #050505; border-radius: 35px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
-
-        /* --- CHECKOUT (GATILHO NOVO) --- */
-        #checkout-area {
-            display: none; padding: 120px 20px; text-align: center;
-        }
-        .checkout-box {
-            background: #fff; color: #000; padding: 80px 40px; border-radius: 50px;
-            max-width: 800px; margin: 0 auto;
-        }
-        .btn-elite {
-            background: #000; color: #fff; padding: 25px 60px; border-radius: 20px;
-            font-weight: 900; text-decoration: none; display: inline-block;
-            font-size: 1.5rem; transition: 0.3s;
-        }
-        .btn-elite:hover { transform: scale(1.05); }
-
-        /* --- PÁGINA DE BEM-VINDO (MODAL) --- */
-        #welcome-screen {
+        /* --- BACKGROUND DE ELITE --- */
+        .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: none;
-            align-items: center; justify-content: center; text-align: center; padding: 40px;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -1;
         }
-        .welcome-content h1 { font-size: 3.5rem; margin-bottom: 20px; letter-spacing: -2px; }
-        .welcome-content p { font-size: 1.4rem; color: var(--accent); max-width: 600px; margin: 0 auto 40px; font-weight: 600; }
 
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- HERO ROBUSTO --- */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        
+        .system-status {
+            background: rgba(212,175,55,0.1); border: 1px solid var(--accent); padding: 8px 20px;
+            border-radius: 50px; font-size: 0.7rem; font-weight: 900; letter-spacing: 2px; color: var(--accent);
+            margin-bottom: 30px; text-transform: uppercase;
+        }
+
+        .hero h1 { font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; line-height: 0.85; letter-spacing: -5px; margin-bottom: 20px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { max-width: 800px; font-size: 1.4rem; color: #888; line-height: 1.4; margin-bottom: 40px; }
+
+        /* --- CARDS EM LINHA (FIXOS E ROBUSTOS) --- */
+        .modules-section { padding-bottom: 100px; }
+        .modules-scroll { 
+            display: flex; gap: 30px; overflow-x: auto; padding: 20px 0;
+            scrollbar-width: none;
+        }
+        .modules-scroll::-webkit-scrollbar { display: none; }
+
+        .mod-card {
+            flex: 0 0 400px; background: var(--card); border: 1px solid #222; border-radius: 40px;
+            padding: 60px 40px; transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .mod-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--accent); opacity: 0; transition: 0.3s;
+        }
+        .mod-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .mod-card:hover::before { opacity: 1; }
+
+        .emoji-img { width: 120px; height: 120px; margin-bottom: 30px; display: block; }
+        .mod-card h3 { font-size: 1.6rem; margin-bottom: 15px; letter-spacing: -1px; }
+        .mod-card p { color: #666; font-size: 1.1rem; line-height: 1.5; }
+
+        /* --- SEÇÃO DO VÍDEO --- */
+        .video-section { padding: 100px 0; }
+        .video-container {
+            background: #000; border: 1px solid #222; border-radius: 50px; padding: 30px;
+            max-width: 1100px; margin: 0 auto; position: relative;
+        }
+        .video-player {
+            width: 100%; aspect-ratio: 16/9; background: #080808; border-radius: 30px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            border: 1px solid #1a1a1a;
+        }
+        .video-player i { font-size: 6rem; color: var(--accent); filter: drop-shadow(0 0 20px rgba(212,175,55,0.4)); }
+
+        /* --- ÁREA DE CHECKOUT (LIBERA DEPOIS DO VÍDEO) --- */
+        #checkout-area { display: none; padding: 100px 0; text-align: center; opacity: 0; }
+        .price-card {
+            background: #fff; color: #000; padding: 80px 40px; border-radius: 60px;
+            max-width: 700px; margin: 0 auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .btn-main {
+            background: #000; color: #fff; padding: 25px 80px; border-radius: 20px;
+            font-size: 1.6rem; font-weight: 900; text-decoration: none; display: inline-block;
+            margin-top: 30px; transition: 0.3s; border: none; cursor: pointer;
+        }
+
+        /* --- INTERFACE DE BEM-VINDO (VIP DASHBOARD) --- */
+        #vip-dashboard {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg); z-index: 10000; display: none; padding: 40px;
+            overflow-y: auto;
+        }
+        .dash-container { max-width: 1200px; margin: 0 auto; }
+        .dash-header { display: flex; align-items: center; gap: 30px; margin-bottom: 60px; border-bottom: 1px solid #222; padding-bottom: 30px; }
+        .user-avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); }
+        .dash-content h1 { font-size: 3rem; letter-spacing: -2px; }
+        .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; text-align: left; }
+        .dash-card { background: #111; border: 1px solid #222; padding: 40px; border-radius: 30px; }
+        .progress-bar { width: 100%; height: 10px; background: #222; border-radius: 10px; margin: 20px 0; }
+        .progress-fill { width: 5%; height: 100%; background: var(--accent); border-radius: 10px; }
     </style>
 </head>
 <body>
 
+    <div class="bg-grid"></div>
+
     <div class="container">
-        <section class="section-hero">
-            <div class="hero-banner">
-                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 80px; margin-bottom: 30px; border-radius: 50%; border: 3px solid var(--accent);">
-                <h1>ORDEM <br> <span>BLACK OPS</span></h1>
-                <p>Onde o silêncio opera e a escala é inevitável. Você está diante do protocolo de inteligência que separa amadores de operadores de elite.</p>
-                <div class="scroll-indicator">
-                    <div class="mouse"></div>
-                    AUTORIZAR ACESSO
-                </div>
-            </div>
+        
+        <section class="hero">
+            <div class="system-status">● Sistema Operacional Black Ops Ativo</div>
+            <h1>A ELITE <span>INVISÍVEL</span></h1>
+            <p>Você não está aqui por acaso. O protocolo foi ativado e as ferramentas de dominação estão prontas para serem carregadas. Role e veja a estrutura.</p>
         </section>
 
-        <section class="section-modules">
-            <div class="modules-wrapper">
+        <section class="modules-section">
+            <div class="modules-scroll">
                 <div class="mod-card">
                     <img src="emoji1.png" class="emoji-img">
-                    <h3>PROTOCOLO ZERO</h3>
-                    <p>A calibração necessária para suportar o peso das decisões de alto nível.</p>
+                    <h3>ESTRATÉGIA FANTASMA</h3>
+                    <p>Como operar abaixo do radar enquanto escala números que ninguém acredita.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji2.png" class="emoji-img">
-                    <h3>ESTRUTURA FANTASMA</h3>
-                    <p>Arquitetura invisível por trás das maiores operações do mercado atual.</p>
+                    <h3>BUNKER DIGITAL</h3>
+                    <p>A montagem da estrutura que blinda seu faturamento contra qualquer crise.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji3.png" class="emoji-img">
-                    <h3>ALAVANCAGEM</h3>
-                    <p>Onde o esforço mínimo encontra a máxima conversão de domínio.</p>
+                    <h3>ENGENHARIA SOCIAL</h3>
+                    <p>Táticas de influência que tornam sua oferta a única opção lógica na mente do cliente.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji4.png" class="emoji-img">
-                    <h3>INFLUÊNCIA NEGRA</h3>
-                    <p>Engenharia de percepção aplicada a ativos digitais de alto valor.</p>
+                    <h3>ALAVANCAGEM BRUTA</h3>
+                    <p>O segredo da multiplicação: como transformar pequenos ativos em fortunas reais.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji5.png" class="emoji-img">
-                    <h3>DOMÍNIO ABSOLUTO</h3>
-                    <p>A transição final para o topo da cadeia. Expansão sem limites.</p>
+                    <h3>DOMÍNIO FINAL</h3>
+                    <p>A automação do sucesso. Onde o operador se torna o dono da rede.</p>
                 </div>
             </div>
         </section>
 
-        <section class="section-video" id="v-area">
-            <div class="video-card">
-                <div class="v-player" onclick="startVideoTimer()">
-                    <i class="fa-solid fa-play" style="font-size: 5rem; color: var(--accent);"></i>
+        <section class="video-section">
+            <div class="video-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 900; font-size: 0.8rem;">
+                    <span>CONEXÃO_SEGURA_V4.SEC</span>
+                    <span style="color: var(--accent);">STATUS: AGUARDANDO PLAYER</span>
+                </div>
+                <div class="video-player" onclick="startCountdown()">
+                    <i class="fa-solid fa-play"></i>
                 </div>
             </div>
         </section>
 
         <section id="checkout-area">
-            <div class="checkout-box">
-                <h2 style="font-weight: 900; font-size: 2.5rem; margin-bottom: 10px;">PROTOCOLO LIBERADO</h2>
-                <p style="margin-bottom: 40px; font-weight: 600; color: #555;">Você foi selecionado para o próximo nível. Prossiga para o bunker.</p>
-                <button onclick="buyAccess()" class="btn-elite">GARANTIR MEU LUGAR NA ELITE</button>
+            <div class="price-card">
+                <h2 style="font-size: 3rem; font-weight: 900;">ACESSO CONCEDIDO</h2>
+                <p style="font-size: 1.2rem; color: #666; margin: 20px 0;">O valor da sua nova vida é simbólico.</p>
+                <div style="font-size: 4rem; font-weight: 900; color: var(--accent);">R$ 29,90</div>
+                <button onclick="finishPurchase()" class="btn-main">LIBERAR MEU ACESSO AGORA</button>
             </div>
         </section>
+
     </div>
 
-    <div id="welcome-screen">
-        <div class="welcome-content">
-            <h1>BEM-VINDO, CHEFE.</h1>
-            <p>Você tomou a decisão correta. Agora vamos ao que interessa: o dinheiro no bolso e a vida que você buscou.</p>
-            <button onclick="closeWelcome()" class="btn-elite" style="background: var(--accent); color: #000;">COMEÇAR AGORA</button>
+    <div id="vip-dashboard">
+        <div class="dash-container">
+            <div class="dash-header">
+                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" class="user-avatar">
+                <div class="dash-content">
+                    <h1>Seja bem-vindo, <span>Operador.</span></h1>
+                    <p style="color: var(--accent); font-weight: 900;">SUA JORNADA DE ELITE COMEÇA AGORA.</p>
+                </div>
+            </div>
+
+            <div class="dash-grid">
+                <div class="dash-card">
+                    <h2 style="margin-bottom: 20px;">Protocolo de Integração</h2>
+                    <p style="color: #888;">Você fez a escolha que 99% das pessoas têm medo de fazer. Aqui dentro, não trabalhamos com sorte, trabalhamos com dados, estratégia e execução fria.</p>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                    <span style="font-size: 0.8rem; font-weight: 900; color: var(--accent);">5% CONCLUÍDO - AGUARDANDO PRIMEIRA AULA</span>
+                    
+                    <button class="btn-main" style="width: 100%; margin-top: 40px; background: var(--accent); color: #000;">ASSISTIR AULA DE BOAS-VINDAS</button>
+                </div>
+
+                <div class="dash-card" style="display: flex; flex-direction: column; gap: 20px;">
+                    <h3 style="color: var(--accent);">Suporte Tático</h3>
+                    <p style="font-size: 0.9rem; color: #666;">Dúvidas sobre a operação? Nosso time está de prontidão 24/7 no canal encriptado.</p>
+                    <a href="#" style="color: #fff; text-decoration: none; font-weight: 900;">> ACESSAR COMUNIDADE BLACK</a>
+                    <a href="#" style="color: #fff; text-decoration: none; font-weight: 900;">> SUPORTE DIRETO VIA WHATSAPP</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -177,46 +205,28 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
-        // Animação dos Cards (GSAP para aparecerem na linha)
+        // Animação dos cards ao rolar
         gsap.from(".mod-card", {
-            scrollTrigger: {
-                trigger: ".modules-wrapper",
-                start: "top 70%",
-            },
-            opacity: 0,
-            x: 100,
-            stagger: 0.2,
-            duration: 1,
-            ease: "power4.out"
+            scrollTrigger: { trigger: ".modules-scroll", start: "top 80%" },
+            opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power4.out"
         });
 
-        // Função de timer do vídeo (Simulando 1m 18s)
-        function startVideoTimer() {
-            alert("O vídeo começou. O botão de acesso aparecerá no momento certo da revelação.");
-            
-            // Defina aqui o tempo em milissegundos (ex: 1m 18s = 78000ms)
-            const videoTime = 78000; 
-
+        // Simula o tempo do vídeo (Coloquei 3s para teste)
+        function startCountdown() {
+            alert("Vídeo Iniciado. O bglh vai carregar em instantes...");
             setTimeout(() => {
                 const checkout = document.getElementById('checkout-area');
                 checkout.style.display = 'block';
+                gsap.to(checkout, { opacity: 1, y: -20, duration: 1 });
                 lenis.scrollTo('#checkout-area');
-                gsap.from(".checkout-box", { scale: 0.8, opacity: 0, duration: 1.5, ease: "elastic.out(1, 0.5)" });
-            }, 3000); // Coloquei 3 segundos só pra você testar agora!
+            }, 3000); 
         }
 
-        // Simulação de Compra -> Bem-vindo
-        function buyAccess() {
-            document.getElementById('welcome-screen').style.display = 'flex';
-            gsap.from(".welcome-content", { y: 100, opacity: 0, duration: 1 });
-        }
-
-        function closeWelcome() {
-            document.getElementById('welcome-screen').style.display = 'none';
-        }
-
-        function closeWelcome() {
-            window.location.href = "LINK_DO_SEU_CURSO_AQUI";
+        // Simula a compra e abre o Dashboard de Boas-vindas
+        function finishPurchase() {
+            const dash = document.getElementById('vip-dashboard');
+            dash.style.display = 'block';
+            gsap.from(dash, { opacity: 0, scale: 1.1, duration: 1, ease: "power4.out" });
         }
     </script>
 </body>
