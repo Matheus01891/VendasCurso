@@ -3,142 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal de Comando | Theus Systems</title>
+    <title>Sistema Theus | Operação de Elite</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 
     <style>
-        :root { --gold: #d4af37; --bg: #030303; --card: #0a0a0a; --gold-low: rgba(212, 175, 55, 0.1); }
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: default; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; 
-            min-height: 100vh; overflow-x: hidden; 
-            background-image: radial-gradient(circle at 50% 50%, #080808 0%, #030303 100%);
-        }
+        :root { --accent: #d4af37; --bg: #050505; --card: #0a0a0a; --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f9e295 100%); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- HEADER DO PORTAL --- */
-        .portal-header { text-align: center; margin-bottom: 50px; }
-        .badge { 
-            display: inline-block; padding: 6px 15px; background: var(--gold-low); border: 1px solid var(--gold);
-            color: var(--gold); border-radius: 50px; font-size: 0.6rem; font-weight: 900; letter-spacing: 2px;
-            margin-bottom: 20px; text-transform: uppercase;
-        }
-        .portal-header h1 { font-size: 3rem; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; }
-        .portal-header h1 span { color: var(--gold); }
+        /* --- HEADER STATUS --- */
+        .status-header { background: #0a0a0a; border-bottom: 1px solid #111; padding: 12px; text-align: center; font-size: 0.65rem; font-weight: 900; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; }
 
-        /* --- VÍDEO PRINCIPAL --- */
-        .main-video-box { 
-            background: #000; border: 1px solid #1a1a1a; border-radius: 30px; 
-            padding: 10px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); margin-bottom: 40px;
-            position: relative; overflow: hidden;
-        }
-        .main-video-box::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(212,175,55,0.05), transparent);
-            pointer-events: none;
-        }
-        video { width: 100%; border-radius: 20px; display: block; }
+        /* --- HERO --- */
+        .hero { padding: 60px 0; text-align: center; }
+        .hero img { width: 80px; border-radius: 50%; border: 2px solid var(--accent); margin-bottom: 20px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; letter-spacing: -3px; line-height: 0.9; text-transform: uppercase; }
+        .hero h1 span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: #555; font-size: 1.1rem; margin-top: 20px; max-width: 600px; margin-inline: auto; font-weight: 600; }
 
-        /* --- GRID DE ACESSO --- */
-        .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
-        .access-card { 
-            background: var(--card); border: 1px solid #151515; padding: 35px; border-radius: 25px; 
-            transition: 0.3s; text-align: left; position: relative;
-        }
-        .access-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .access-card i { font-size: 2rem; color: var(--gold); margin-bottom: 20px; }
-        .access-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
-        .access-card p { color: #555; font-size: 0.85rem; line-height: 1.6; margin-bottom: 25px; }
+        /* --- GRID DE CARDS AUTORITÁRIOS --- */
+        .modules-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 50px; }
+        .mod-card { background: var(--card); border: 1px solid #151515; border-radius: 20px; padding: 35px 15px; text-align: center; transition: 0.4s; }
+        .mod-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .mod-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; display: block; }
+        .mod-card h3 { font-size: 0.85rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+        .mod-card p { font-size: 0.75rem; color: #444; line-height: 1.4; font-weight: 600; }
 
-        /* --- BOTÕES --- */
-        .btn { 
-            display: block; width: 100%; padding: 18px; border-radius: 12px; font-weight: 900; 
-            text-transform: uppercase; text-decoration: none; text-align: center; font-size: 0.8rem;
-            letter-spacing: 1px; transition: 0.3s; cursor: pointer; border: none;
-        }
-        .btn-gold { background: var(--gold); color: #000; }
-        .btn-gold:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
-        
-        .btn-outline { border: 1px solid #222; color: #fff; background: transparent; }
-        .btn-outline:hover { background: #111; border-color: #444; }
+        /* --- VIDEO --- */
+        .video-container { margin: 60px 0; background: #000; border: 1px solid #1a1a1a; border-radius: 40px; padding: 15px; }
+        .video-placeholder { width: 100%; aspect-ratio: 16/9; background: #030303; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* --- EMERGÊNCIA / HELP ME --- */
-        .help-section {
-            background: linear-gradient(to right, #0a0a0a, #0f0a00);
-            border: 1px dashed #333; border-radius: 25px; padding: 40px; text-align: center;
-        }
-        .help-section h2 { font-size: 1.2rem; font-weight: 900; margin-bottom: 15px; color: #fff; }
-        .btn-sos { 
-            background: #ff3e3e; color: #fff; padding: 15px 40px; border-radius: 50px; 
-            font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
-            font-size: 0.9rem; animation: pulse-red 2s infinite; cursor: pointer;
-        }
+        /* --- PROTEÇÃO (SEM TESTE GRÁTIS) --- */
+        .protecao-box { background: #0a0a0a; border: 1px solid #111; border-radius: 25px; padding: 40px; text-align: center; margin-bottom: 60px; }
+        .protecao-box h2 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
+        .protecao-box p { color: #666; font-size: 0.9rem; max-width: 600px; margin: 0 auto; }
 
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 62, 62, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 62, 62, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 62, 62, 0); }
-        }
+        /* --- BOTÃO HELP ME (ADMINS) --- */
+        .help-center { background: linear-gradient(to right, #0a0a0a, #111); border: 1px solid #222; border-radius: 20px; padding: 30px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px; }
+        .help-text h4 { font-weight: 900; font-size: 1.1rem; }
+        .help-text p { color: #555; font-size: 0.85rem; }
+        .btn-sos { background: #ff3e3e; color: #fff; padding: 15px 30px; border-radius: 10px; font-weight: 900; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; }
 
-        /* --- FOOTER TÉCNICO --- */
-        .security-footer { margin-top: 50px; text-align: center; border-top: 1px solid #111; padding-top: 30px; }
-        .security-footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: #333; text-transform: uppercase; }
+        /* --- FAQ GIGANTE --- */
+        .faq-section { padding-bottom: 100px; }
+        .faq-item { background: #0a0a0a; border: 1px solid #151515; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 25px; cursor: pointer; font-weight: 800; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
+        .faq-answer { padding: 0 25px 25px; color: #555; display: none; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
 
-        @media (max-width: 768px) { .access-grid { grid-template-columns: 1fr; } }
+        /* --- BOTÃO FINAL --- */
+        .btn-final { background: var(--gold-gradient); color: #000; padding: 25px 60px; border-radius: 15px; font-weight: 900; font-size: 1.2rem; text-decoration: none; display: inline-block; text-transform: uppercase; border: none; cursor: pointer; }
+
+        @media (max-width: 800px) { .modules-grid { grid-template-columns: 1fr; } .help-center { flex-direction: column; text-align: center; gap: 20px; } }
     </style>
 </head>
 <body>
 
+    <div class="status-header">Operação Ativa: Protocolos de Segurança Nível 5</div>
+
     <div class="container">
         
-        <header class="portal-header">
-            <div class="badge">Acesso Criptografado Verificado</div>
-            <h1>BEM-VINDO AO <span>COMANDO</span></h1>
-            <p style="color: #444; margin-top: 10px; font-weight: 600;">Sua licença está ativa. Siga o protocolo de implementação abaixo.</p>
-        </header>
+        <section class="hero">
+            <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg">
+            <h1>DOMÍNIO <span>THEUS</span></h1>
+            <p>Infraestrutura blindada para processamento de ativos digitais. Execute com autoridade.</p>
+        </section>
 
-        <div class="main-video-box">
-            <video controls autoplay poster="thumb-video.jpg">
-                <source src="boas-vindas.mp4" type="video/mp4">
-            </video>
-        </div>
-
-        <div class="access-grid">
-            <div class="access-card">
-                <i class="fa-solid fa-file-binary"></i>
-                <h3>REPOSITÓRIO DE DADOS</h3>
-                <p>Acesse o diretório completo de arquivos, scripts e automações necessárias para a operação.</p>
-                <a href="#" class="btn btn-gold">EXTRAIR ATIVOS AGORA</a>
+        <div class="modules-grid">
+            <div class="mod-card">
+                <i class="fa-solid fa-vault"></i>
+                <h3>ARQUITETURA</h3>
+                <p>Estrutura inabalável para recepção e gestão de dados.</p>
             </div>
-
-            <div class="access-card">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h3>CENTRAL DE TREINAMENTO</h3>
-                <p>Módulos de instrução técnica para configuração do ambiente e execução de alta performance.</p>
-                <a href="#" class="btn btn-outline">ASSISTIR PROTOCOLOS</a>
+            <div class="mod-card">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>REPOSITÓRIO</h3>
+                <p>Banco de ativos de alta performance para execução imediata.</p>
+            </div>
+            <div class="mod-card">
+                <i class="fa-solid fa-shield-check"></i>
+                <h3>DIRETRIZES</h3>
+                <p>Protocolos de segurança para operação sem rastreabilidade.</p>
+            </div>
+            <div class="mod-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>LOGÍSTICA</h3>
+                <p>Fluxo otimizado para escala industrial de resultados.</p>
+            </div>
+            <div class="mod-card">
+                <i class="fa-solid fa-crown"></i>
+                <h3>SOBERANIA</h3>
+                <p>Domínio completo do ecossistema de lucros digitais.</p>
             </div>
         </div>
 
-        <div class="help-section">
-            <i class="fa-solid fa-headset" style="color: #ff3e3e; font-size: 1.5rem; margin-bottom: 15px; display: block;"></i>
-            <h2>ENCONTROU ALGUMA INCONSISTÊNCIA?</h2>
-            <p style="color: #555; font-size: 0.85rem; margin-bottom: 25px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                Nossos administradores de rede estão em standby para resolver qualquer problema de acesso ou configuração técnica.
-            </p>
-            <a href="https://wa.me/SEUNUMERO" class="btn-sos">
-                <i class="fa-solid fa-triangle-exclamation"></i> ACIONAR SUPORTE DE EMERGÊNCIA
-            </a>
+        <div class="video-container">
+            <div class="video-placeholder" onclick="revealBtn()">
+                <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
+            </div>
         </div>
 
-        <footer class="security-footer">
-            <p>Sessão monitorada via IP: 189.12.XXX.XXX | Status: Criptografado | © Theus Systems 2025</p>
-        </footer>
+        <div class="help-center">
+            <div class="help-text">
+                <h4>SUPORTE DOS ADMINISTRADORES</h4>
+                <p>Nossa cúpula técnica está online para garantir sua implementação.</p>
+            </div>
+            <a href="https://wa.me/SEUNUMERO" class="btn-sos">Solicitar Auxílio Técnico</a>
+        </div>
+
+        <div class="protecao-box">
+            <h2>PROTEÇÃO DE TRANSAÇÃO</h2>
+            <p>Acesso garantido e blindado. Implementamos os mais altos padrões de criptografia para que sua operação comece com segurança total desde o primeiro segundo.</p>
+        </div>
+
+        <section class="faq-section">
+            <h2 style="text-align: center; margin-bottom: 40px; font-weight: 900;">PERGUNTAS TÉCNICAS</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">O acesso é vitalício? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Sim. Uma vez autorizada a sua licença, o repositório e todas as futuras atualizações de segurança são suas para sempre.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Como recebo os arquivos? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Imediatamente. O sistema libera o download dos pacotes e o acesso aos protocolos em vídeo no instante da confirmação.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Posso operar sem experiência? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">O sistema foi desenhado para ser autoexecutável. Basta seguir as diretrizes passo a passo.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Terei ajuda se travar? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Sim. O botão de suporte aos administradores serve justamente para que nenhum operador fique para trás.</div>
+            </div>
+        </section>
+
+        <div id="cta-final" style="display: none; text-align: center; padding-bottom: 100px;">
+            <a href="SEU_LINK_CHECKOUT" class="btn-final">ADQUIRIR LICENÇA DE COMANDO</a>
+        </div>
 
     </div>
+
+    <script>
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        function revealBtn() {
+            setTimeout(() => {
+                document.getElementById('cta-final').style.display = 'block';
+                window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+            }, 1500);
+        }
+    </script>
 
 </body>
 </html>
