@@ -12,56 +12,45 @@
     <style>
         :root { 
             --accent: #d4af37; 
-            --bg-page: #ececec; /* Cinza claro idêntico à Imagem 3 */
-            --card-dark: #161616; /* Preto profundo dos cards */
+            --bg-page: #ececec; /* Temática Imagem 3 */
+            --card-dark: #161616; /* Cards Pretos */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: #000; padding: 25px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: #000; overflow-x: hidden; }
 
-        .dashboard {
-            max-width: 1400px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 380px; gap: 25px;
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* --- SEÇÃO 1: HERO (SCROLL) --- */
+        .section-hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
-        /* --- LADO ESQUERDO (CONTEÚDO PRINCIPAL) --- */
         .hero-banner {
             background: #000; border-radius: 35px; padding: 70px 50px; color: #fff;
-            border: 1px solid #ddd; position: relative;
+            border: 1px solid #ddd; width: 100%;
         }
         .hero-banner h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
         .hero-banner h1 span { color: var(--accent); }
-        .hero-banner p { color: #888; margin: 20px 0; max-width: 480px; font-size: 1.1rem; }
+        .hero-banner p { color: #888; margin: 20px auto; max-width: 550px; font-size: 1.1rem; }
 
         .btn-gold {
             background: var(--accent); color: #000; padding: 18px 45px; border-radius: 12px;
             font-weight: 800; text-decoration: none; display: inline-block; text-transform: uppercase;
-            transition: 0.3s;
+            transition: 0.3s; cursor: pointer; border: none;
         }
         .btn-gold:hover { transform: scale(1.05); filter: brightness(1.1); }
 
-        .section-title { font-weight: 900; text-transform: uppercase; margin: 35px 0 15px; font-size: 0.85rem; letter-spacing: 1px; }
-
-        /* GRID DE 5 MÓDULOS COM SEUS EMOJIS */
-        .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        
-        .mod-card {
-            background: var(--card-dark); border-radius: 30px; padding: 45px 25px;
-            text-align: center; color: #fff; border: 1px solid #222; transition: 0.3s;
-        }
-        .mod-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-
-        /* ESTILO DOS SEUS 5 ARQUIVOS PNG */
-        .emoji-img { width: 95px; height: 95px; margin-bottom: 25px; object-fit: contain; }
-
-        .mod-card h3 { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; }
-        .mod-card p { color: #666; font-size: 0.85rem; line-height: 1.4; }
-
-        /* --- SIDEBAR DIREITA (VÍDEO E CRONOGRAMA) --- */
-        .sidebar { display: flex; flex-direction: column; gap: 25px; }
-        
+        /* --- SEÇÃO 2: VÍDEO (SCROLL) --- */
+        .section-video { padding: 60px 0; text-align: center; }
         .video-card {
-            background: #000; border-radius: 35px; padding: 30px; color: #fff; border: 1px solid #ddd;
+            background: #000; border-radius: 35px; padding: 30px; color: #fff; 
+            border: 1px solid #ddd; max-width: 800px; margin: 0 auto;
         }
         .v-player {
             width: 100%; aspect-ratio: 16/9; background: #0a0a0a; border-radius: 20px;
@@ -70,111 +59,117 @@
         }
         .v-player:hover { border-color: var(--accent); }
 
-        .cronograma {
-            background: var(--card-dark); border-radius: 35px; padding: 35px; color: #fff; border: 1px solid #222;
+        /* --- SEÇÃO 3: MÓDULOS (SCROLL) --- */
+        .section-modules { padding: 60px 0; }
+        .section-title { font-weight: 900; text-transform: uppercase; margin-bottom: 30px; text-align: center; font-size: 1.2rem; letter-spacing: 2px; }
+        
+        .modules-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
         }
-        .aula {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 18px 0; border-bottom: 1px solid #222; color: #555; font-size: 0.9rem;
+        
+        .mod-card {
+            background: var(--card-dark); border-radius: 30px; padding: 45px 25px;
+            text-align: center; color: #fff; border: 1px solid #222; transition: 0.3s;
         }
-        .aula.active { color: var(--accent); font-weight: bold; }
+        .mod-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .emoji-img { width: 95px; height: 95px; margin-bottom: 25px; object-fit: contain; }
+        .mod-card h3 { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; }
+        .mod-card p { color: #666; font-size: 0.85rem; line-height: 1.4; }
 
-        /* SEÇÃO DE COMPRA (LIBERADA PELO VÍDEO) */
+        /* --- SEÇÃO 4: CHECKOUT --- */
         #checkout-area {
-            display: none; grid-column: 1 / -1; background: #fff; padding: 60px;
-            border-radius: 35px; text-align: center; border: 1px solid #ddd; margin-top: 30px;
+            display: none; background: #fff; border-radius: 35px; padding: 80px 20px;
+            text-align: center; border: 1px solid #ddd; margin: 40px 0;
         }
 
-        @media (max-width: 1100px) { 
-            .dashboard { grid-template-columns: 1fr; } 
-            .modules-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 768px) {
+            .hero-banner h1 { font-size: 2.5rem; }
+            .modules-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard">
+    <div class="container">
         
-        <div class="main-content">
-            <header class="hero-banner" data-aos="fade-up">
-                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 50px; margin-bottom: 20px; border-radius: 50%; border: 1px solid var(--accent);">
+        <section class="section-hero" data-aos="fade-up">
+            <header class="hero-banner">
+                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 60px; margin-bottom: 20px; border-radius: 50%; border: 2px solid var(--accent);">
                 <h1>Black Ops <span>Elite</span></h1>
-                <p>O treinamento que redefine o jogo. Entre para o sistema, domine a operação e escale seus resultados hoje.</p>
-                <a href="#v-area" class="btn-gold">Entrar na Operação</a>
+                <p>O treinamento que redefine o jogo. Role para baixo e descubra como dominar a operação agora.</p>
+                <button onclick="scrollToVideo()" class="btn-gold">Descobrir o Segredo</button>
             </header>
+        </section>
 
-            <h2 class="section-title">Modules Grid</h2>
+        <section class="section-video" id="v-area" data-aos="fade-up">
+            <h2 class="section-title">Apresentação Oficial</h2>
+            <div class="video-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: 1px;">SISTEMA ATIVO</span>
+                    <span style="color: var(--accent); font-size: 0.7rem; font-weight: 900;">● VIP ACCESS</span>
+                </div>
+                <div class="v-player" onclick="revealCheckout()">
+                    <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
+                </div>
+                <p style="color: #444; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Clique no player para liberar os módulos</p>
+            </div>
+        </section>
+
+        <section class="section-modules" data-aos="fade-up">
+            <h2 class="section-title">Módulos de Operação</h2>
             <div class="modules-grid">
                 <div class="mod-card" data-aos="zoom-in">
-                    <img src="emoji1.png" class="emoji-img" alt="Módulo 1">
+                    <img src="emoji1.png" class="emoji-img">
                     <h3>VISÃO ESTRATÉGICA</h3>
                     <p>Mentalidade de elite e foco total no lucro real.</p>
                 </div>
                 <div class="mod-card" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="emoji2.png" class="emoji-img" alt="Módulo 2">
+                    <img src="emoji2.png" class="emoji-img">
                     <h3>OPERAÇÃO BRUTA</h3>
                     <p>Montagem da estrutura e logística do zero.</p>
                 </div>
                 <div class="mod-card" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="emoji3.png" class="emoji-img" alt="Módulo 3">
+                    <img src="emoji3.png" class="emoji-img">
                     <h3>LUCRATIVIDADE</h3>
                     <p>Otimização de processos para faturamento alto.</p>
                 </div>
                 <div class="mod-card" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="emoji4.png" class="emoji-img" alt="Módulo 4">
+                    <img src="emoji4.png" class="emoji-img">
                     <h3>CRIATIVOS BLACK</h3>
                     <p>Anúncios e ofertas impossíveis de ignorar.</p>
                 </div>
                 <div class="mod-card" data-aos="zoom-in" data-aos-delay="400">
-                    <img src="emoji5.png" class="emoji-img" alt="Módulo 5">
+                    <img src="emoji5.png" class="emoji-img">
                     <h3>ESCALA INFINITA</h3>
                     <p>Multiplicação exponencial do seu faturamento.</p>
                 </div>
             </div>
-        </div>
-
-        <aside class="sidebar" id="v-area">
-            <div class="video-card" data-aos="fade-left">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 900; font-size: 0.8rem;">BLACK OPS ELITE</span>
-                    <span style="color: var(--accent); font-size: 0.7rem; font-weight: 900;">● VIP</span>
-                </div>
-                <div class="v-player" onclick="revealCheckout()">
-                    <i class="fa-solid fa-play" style="font-size: 3.5rem; color: var(--accent);"></i>
-                </div>
-                <p style="text-align: center; font-size: 0.75rem; color: #444; font-weight: bold;">ASSISTA PARA LIBERAR SEU ACESSO</p>
-            </div>
-
-            <div class="cronograma" data-aos="fade-left" data-aos-delay="200">
-                <h3 style="font-size: 1rem; margin-bottom: 25px; text-transform: uppercase;">Conteúdo do Curso</h3>
-                <div class="aula active">01. Introdução ao Sistema <i class="fa-solid fa-circle-play"></i></div>
-                <div class="aula">02. A Brecha do Mercado <i class="fa-solid fa-lock"></i></div>
-                <div class="aula">03. Criação da Máquina <i class="fa-solid fa-lock"></i></div>
-                <div class="aula">04. Escala e Contingência <i class="fa-solid fa-lock"></i></div>
-            </div>
-        </aside>
+        </section>
 
         <div id="checkout-area" data-aos="fade-up">
-            <h1 style="font-weight: 900; font-size: 2.5rem;">ACESSO IMEDIATO LIBERADO</h1>
-            <p style="margin: 15px 0 30px; color: #666; font-size: 1.1rem;">Garanta sua vaga na elite por apenas <b>R$ 29,90</b></p>
-            <a href="https://SEU_LINK_DE_PAGAMENTO_AQUI" class="btn-gold" style="background: #000; color: #fff; padding: 25px 80px; font-size: 1.3rem;">QUERO MINHA VAGA AGORA</a>
+            <h1 style="font-weight: 900; font-size: 2.8rem; letter-spacing: -1px;">ACESSO LIBERADO</h1>
+            <p style="margin: 15px 0 35px; color: #666; font-size: 1.2rem;">Entre para a elite agora por apenas <b>R$ 29,90</b></p>
+            <a href="https://SEU_LINK_AQUI" class="btn-gold" style="background: #000; color: #fff; padding: 25px 80px; font-size: 1.4rem;">QUERO MINHA VAGA AGORA</a>
         </div>
 
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // Inicializa as animações de surgimento
-        AOS.init({ duration: 800, once: true });
+        AOS.init({ duration: 900, once: true });
 
-        // Função para mostrar o checkout após clicar no "vídeo"
+        function scrollToVideo() {
+            document.getElementById('v-area').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function revealCheckout() {
             document.getElementById('checkout-area').style.display = 'block';
             setTimeout(() => {
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                document.getElementById('checkout-area').scrollIntoView({ behavior: 'smooth' });
             }, 100);
         }
     </script>
 </body>
 </html>
-
