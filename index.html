@@ -3,184 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Operações | Theus Systems</title>
+    <title>Interface de Operações | Theus Systems</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 
     <style>
-        :root { --accent: #d4af37; --bg: #050505; --card: #0f0f0f; }
+        :root { --accent: #d4af37; --bg: #050505; --card: #0f0f0f; --text-dim: #555; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- HERO --- */
-        .hero { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -3px; }
+        /* --- HEADER --- */
+        .hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero img { width: 60px; border-radius: 50%; border: 1px solid var(--accent); margin-bottom: 20px; opacity: 0.8; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: -2px; text-transform: uppercase; }
         .hero h1 span { color: var(--accent); }
-        .hero p { color: #666; font-size: 1.2rem; margin-top: 20px; max-width: 600px; }
+        .hero p { color: var(--text-dim); font-size: 1.1rem; margin-top: 15px; max-width: 550px; font-weight: 500; }
 
-        /* --- OS 5 CARDS (VISÍVEIS SEM SCROLL) --- */
-        .section-modules { padding: 40px 0; }
+        /* --- GRID DE 5 CARDS --- */
         .modules-grid { 
             display: grid; 
-            grid-template-columns: repeat(5, 1fr); /* 5 colunas fixas */
+            grid-template-columns: repeat(5, 1fr); 
             gap: 15px; 
+            margin-bottom: 60px;
         }
         .mod-card {
-            background: var(--card); border: 1px solid #1a1a1a;
-            border-radius: 25px; padding: 40px 20px; text-align: center; transition: 0.3s;
+            background: var(--card); border: 1px solid #161616;
+            border-radius: 20px; padding: 35px 15px; text-align: center; transition: 0.3s;
         }
         .mod-card:hover { border-color: var(--accent); background: #111; }
-        .emoji-img { width: 70px; height: 70px; margin-bottom: 20px; }
-        .mod-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #fff; font-weight: 800; }
-        .mod-card p { font-size: 0.85rem; color: #555; line-height: 1.4; }
+        .emoji-img { width: 60px; height: 60px; margin-bottom: 20px; object-fit: contain; }
+        .mod-card h3 { font-size: 0.9rem; margin-bottom: 10px; color: #fff; font-weight: 800; letter-spacing: 1px; }
+        .mod-card p { font-size: 0.75rem; color: #444; line-height: 1.4; }
 
-        /* --- FAQ ROBUSTO --- */
-        .faq-section { padding: 100px 0; max-width: 1000px; margin: 0 auto; }
-        .faq-header { text-align: center; margin-bottom: 50px; }
-        .faq-item { background: #080808; border: 1px solid #151515; border-radius: 15px; margin-bottom: 10px; transition: 0.3s; }
-        .faq-item:hover { border-color: #333; }
-        .faq-question { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
-        .faq-answer { padding: 0 25px 25px; color: #666; display: none; border-top: 1px solid #111; padding-top: 20px; line-height: 1.6; }
-        .faq-question i { color: var(--accent); font-size: 0.8rem; }
+        /* --- VIDEO --- */
+        .video-box { background: #000; border: 1px solid #1a1a1a; border-radius: 30px; padding: 15px; margin-bottom: 80px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .player { width: 100%; aspect-ratio: 16/9; background: #030303; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #111; }
+        .player i { font-size: 3.5rem; color: var(--accent); opacity: 0.8; }
 
-        /* --- SUPORTE DISCRETO (FLUTUANTE) --- */
-        .support-fixed {
-            position: fixed; bottom: 30px; right: 30px; z-index: 999;
-            background: #111; border: 1px solid #222; padding: 12px 20px;
-            border-radius: 50px; display: flex; align-items: center; gap: 12px;
-            cursor: pointer; transition: 0.3s; text-decoration: none; color: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* --- FAQ --- */
+        .faq-section { padding-bottom: 100px; max-width: 800px; margin: 0 auto; }
+        .faq-item { background: #080808; border: 1px solid #111; border-radius: 12px; margin-bottom: 8px; }
+        .faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1rem; color: #ccc; }
+        .faq-answer { padding: 0 20px 20px; color: #555; display: none; font-size: 0.9rem; line-height: 1.5; border-top: 1px solid #0d0d0d; padding-top: 15px; }
+        
+        /* --- SUPORTE DISCRETO --- */
+        .support-btn {
+            position: fixed; bottom: 25px; right: 25px; z-index: 999;
+            background: #0f0f0f; border: 1px solid #222; padding: 10px 18px;
+            border-radius: 50px; display: flex; align-items: center; gap: 10px;
+            text-decoration: none; color: #fff; transition: 0.3s;
         }
-        .support-fixed:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .dot { width: 8px; height: 8px; background: #25d366; border-radius: 50%; box-shadow: 0 0 10px #25d366; }
+        .support-btn:hover { border-color: var(--accent); }
+        .online-dot { width: 7px; height: 7px; background: #25d366; border-radius: 50%; box-shadow: 0 0 10px #25d366; }
 
-        /* --- VIDEO & CHECKOUT --- */
-        .video-box { background: #000; border: 1px solid #222; border-radius: 40px; padding: 20px; margin: 60px 0; }
-        .player { width: 100%; aspect-ratio: 16/9; background: #050505; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        /* --- PORTAL PÓS-COMPRA (MODERNO) --- */
-        #onboarding-portal {
+        /* --- PORTAL PÓS-COMPRA --- */
+        #portal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #050505; z-index: 10000; display: none; overflow-y: auto; padding: 60px 20px;
+            background: #050505; z-index: 10000; display: none; overflow-y: auto; padding: 50px 20px;
         }
-        .portal-content { max-width: 1100px; margin: 0 auto; }
-        .portal-card { background: #0f0f0f; border: 1px solid #1a1a1a; padding: 40px; border-radius: 30px; margin-bottom: 25px; }
-        .btn-action { background: var(--accent); color: #000; padding: 18px 40px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
+        .portal-card { background: #0f0f0f; border: 1px solid #1a1a1a; padding: 30px; border-radius: 25px; margin-bottom: 20px; }
+        .btn-action { background: var(--accent); color: #000; padding: 15px 30px; border-radius: 10px; font-weight: 900; text-decoration: none; display: inline-block; border: none; cursor: pointer; font-size: 0.9rem; text-transform: uppercase; }
 
-        @media (max-width: 1024px) { .modules-grid { grid-template-columns: 1fr; } }
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 40px; color: #222; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
+
+        @media (max-width: 900px) { .modules-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <div class="container">
         <section class="hero">
+            <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg">
             <h1>SISTEMA <span>THEUS</span></h1>
-            <p>Acesso técnico à estrutura de operações. Tudo o que você precisa em um único ambiente de trabalho.</p>
+            <p>Infraestrutura técnica para operações digitais. Conteúdo focado em entrega de arquivos e execução de diretrizes.</p>
         </section>
 
-        <section class="section-modules">
-            <div class="modules-grid">
-                <div class="mod-card">
-                    <img src="emoji1.png" class="emoji-img">
-                    <h3>CONFIGURAÇÃO</h3>
-                    <p>Preparação total do ambiente e diretrizes iniciais do projeto.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji2.png" class="emoji-img">
-                    <h3>ARQUIVOS</h3>
-                    <p>Acesso direto aos pacotes de dados e bibliotecas de execução.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji3.png" class="emoji-img">
-                    <h3>AULAS PRÁTICAS</h3>
-                    <p>Treinamento em vídeo sobre a execução técnica de cada etapa.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji4.png" class="emoji-img">
-                    <h3>OPERAÇÃO</h3>
-                    <p>O fluxo de trabalho diário para manter o sistema rodando.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji5.png" class="emoji-img">
-                    <h3>EXPANSÃO</h3>
-                    <p>Como escalar a estrutura e aumentar o volume de resultados.</p>
-                </div>
+        <div class="modules-grid">
+            <div class="mod-card">
+                <img src="emoji1.png" class="emoji-img">
+                <h3>PREPARAÇÃO</h3>
+                <p>Configuração do ambiente e ferramentas de trabalho.</p>
             </div>
-        </section>
+            <div class="mod-card">
+                <img src="emoji2.png" class="emoji-img">
+                <h3>BIBLIOTECA</h3>
+                <p>Acesso ao repositório de arquivos e dados técnicos.</p>
+            </div>
+            <div class="mod-card">
+                <img src="emoji3.png" class="emoji-img">
+                <h3>EXECUÇÃO</h3>
+                <p>Aulas passo a passo sobre a implementação do sistema.</p>
+            </div>
+            <div class="mod-card">
+                <img src="emoji4.png" class="emoji-img">
+                <h3>LOGÍSTICA</h3>
+                <p>Gerenciamento de rotina e fluxo operacional.</p>
+            </div>
+            <div class="mod-card">
+                <img src="emoji5.png" class="emoji-img">
+                <h3>ESCALA</h3>
+                <p>Otimização para aumento de volume e resultados.</p>
+            </div>
+        </div>
 
         <div class="video-box">
             <div class="player" onclick="revealCheckout()">
-                <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
+                <i class="fa-solid fa-play"></i>
             </div>
         </div>
 
         <section class="faq-section">
-            <div class="faq-header">
-                <h2 style="font-size: 2.5rem; letter-spacing: -1px;">CENTRAL DE DÚVIDAS</h2>
-                <p style="color: #444; margin-top: 10px;">Informações técnicas sobre o acesso e funcionamento.</p>
-            </div>
-            
             <div class="faq-item">
-                <div class="faq-question">O acesso aos arquivos é vitalício? <i class="fa-solid fa-plus"></i></div>
-                <div class="faq-answer">Sim. Uma vez adquirido, você terá acesso a todas as aulas e atualizações de arquivos sem cobranças adicionais.</div>
+                <div class="faq-question">Como recebo os arquivos? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Imediatamente após a compra, você é redirecionado ao painel de downloads e aulas.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Preciso baixar algum software específico? <i class="fa-solid fa-plus"></i></div>
-                <div class="faq-answer">Todas as aulas explicam o que deve ser utilizado. Fornecemos os links e arquivos necessários dentro da área de membros.</div>
+                <div class="faq-question">É necessário conhecimento avançado? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Não. O material é 100% técnico e prático, guiando desde a instalação até a execução.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Como funciona o suporte técnico? <i class="fa-solid fa-plus"></i></div>
-                <div class="faq-answer">Temos uma equipe de administradores pronta para resolver qualquer problema de acesso ou dúvida técnica via canal direto.</div>
+                <div class="faq-question">Tem suporte se eu encontrar erros? <i class="fa-solid fa-plus"></i></div>
+                <div class="faq-answer">Sim. Nossos administradores atendem diretamente via canal técnico para resolver qualquer falha.</div>
             </div>
         </section>
 
         <div id="checkout-trigger" style="display: none; text-align: center; padding-bottom: 100px;">
-            <button onclick="simularCompra()" class="btn-action" style="font-size: 1.5rem;">LIBERAR MEU ACESSO AGORA</button>
+            <button onclick="simularCompra()" class="btn-action" style="font-size: 1.2rem; padding: 20px 50px;">LIBERAR ACESSO IMEDIATO</button>
         </div>
+
+        <footer>© 2025 THEUS SYSTEMS - TODOS OS DIREITOS RESERVADOS.</footer>
     </div>
 
-    <a href="https://wa.me/SEUNUMERO" class="support-fixed">
-        <span class="dot"></span>
-        <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">SUPORTE TÉCNICO</span>
+    <a href="https://wa.me/SEUNUMERO" class="support-btn">
+        <span class="online-dot"></span>
+        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 1px;">CONTATO TÉCNICO</span>
     </a>
 
-    <div id="onboarding-portal">
-        <div class="portal-content">
-            <div style="margin-bottom: 40px;">
-                <h1 style="font-size: 3rem;">ACESSO AO CONTEÚDO</h1>
-                <p style="color: #666;">Siga as diretrizes abaixo para iniciar sua operação.</p>
-            </div>
-
+    <div id="portal">
+        <div class="container" style="max-width: 900px;">
+            <h2 style="font-size: 2rem; margin-bottom: 30px; letter-spacing: -1px;">PAINEL DE ACESSO</h2>
+            
             <div class="portal-card">
-                <video style="width: 100%; border-radius: 15px; border: 1px solid #222;" controls autoplay muted>
-                    <source src="aula-boas-vindas.mp4" type="video/mp4">
+                <video style="width: 100%; border-radius: 15px; background: #000;" controls autoplay muted>
+                    <source src="boas-vindas.mp4" type="video/mp4">
                 </video>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div class="portal-card">
-                    <h3>BIBLIOTECA DE AULAS</h3>
-                    <p style="margin: 15px 0; color: #555;">Assista aos vídeos explicativos e entenda a lógica do sistema.</p>
-                    <a href="#" class="btn-action">ASSISTIR AULAS</a>
+                    <h4 style="margin-bottom: 15px;">AULAS GRAVADAS</h4>
+                    <a href="#" class="btn-action" style="width: 100%; text-align: center;">ACESSAR AGORA</a>
                 </div>
                 <div class="portal-card">
-                    <h3>DOWNLOAD DE ARQUIVOS</h3>
-                    <p style="margin: 15px 0; color: #555;">Baixe os pacotes necessários para configurar sua máquina.</p>
-                    <a href="#" class="btn-action" style="background: #222; color: #fff;">BAIXAR PACOTES</a>
+                    <h4 style="margin-bottom: 15px;">PACOTE DE DADOS</h4>
+                    <a href="#" class="btn-action" style="width: 100%; text-align: center; background: #222; color: #fff;">BAIXAR ARQUIVOS</a>
                 </div>
             </div>
 
-            <div class="portal-card" style="text-align: center;">
-                <h3>DIFICULDADES TÉCNICAS?</h3>
-                <p style="margin: 15px 0; color: #555;">Nossos administradores e técnicos estão disponíveis para te ajudar na instalação.</p>
-                <a href="#" class="btn-action" style="background: #25d366; color: #fff;">FALAR COM UM TÉCNICO</a>
+            <div class="portal-card" style="text-align: center; border-color: #222;">
+                <h4 style="margin-bottom: 10px;">SUPORTE ADMINISTRATIVO</h4>
+                <p style="font-size: 0.8rem; color: #444; margin-bottom: 20px;">Fale com um técnico para auxílio na configuração.</p>
+                <a href="#" class="btn-action" style="background: #25d366; color: #fff;">CHAMAR NO WHATSAPP</a>
             </div>
         </div>
     </div>
@@ -190,32 +180,25 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // FAQ Interativo
+        // FAQ
         document.querySelectorAll('.faq-question').forEach(item => {
             item.addEventListener('click', () => {
                 const answer = item.nextElementSibling;
-                const icon = item.querySelector('i');
                 const isOpen = answer.style.display === 'block';
-                
                 document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-                document.querySelectorAll('.faq-question i').forEach(i => i.className = 'fa-solid fa-plus');
-
-                if (!isOpen) {
-                    answer.style.display = 'block';
-                    icon.className = 'fa-solid fa-minus';
-                }
+                answer.style.display = isOpen ? 'none' : 'block';
             });
         });
 
         function revealCheckout() {
             setTimeout(() => {
                 document.getElementById('checkout-trigger').style.display = 'block';
-                lenis.scrollTo('#checkout-trigger');
-            }, 2000); 
+                window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+            }, 3000); 
         }
 
         function simularCompra() {
-            document.getElementById('onboarding-portal').style.display = 'block';
+            document.getElementById('portal').style.display = 'block';
             window.scrollTo(0,0);
         }
     </script>
