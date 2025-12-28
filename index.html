@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black Ops Elite | Operação Dominância</title>
+    <title>Painel de Operações | Theus Systems</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -14,180 +14,136 @@
 
     <style>
         :root { --accent: #d4af37; --bg: #050505; --card: #0f0f0f; }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
-
-        /* Grade de fundo para preencher o vazio */
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(circle at 2px 2px, rgba(212,175,55,0.05) 1px, transparent 0);
-            background-size: 40px 40px; z-index: -1;
-        }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
         /* --- HERO --- */
-        .hero { 
-            min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
-            border-bottom: 1px solid #111; margin-bottom: 50px;
-        }
-        .hero h1 { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 900; line-height: 0.8; letter-spacing: -5px; margin-bottom: 25px; }
-        .hero h1 span { color: var(--accent); text-shadow: 0 0 30px rgba(212,175,55,0.2); }
-        .hero p { max-width: 750px; font-size: 1.3rem; color: #666; font-weight: 500; }
+        .hero { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -3px; line-height: 1; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { color: #666; font-size: 1.2rem; margin-top: 20px; max-width: 650px; }
 
-        /* --- CARDS GRANDES EM LINHA (FIXOS) --- */
-        .section-modules { padding: 80px 0; }
-        .modules-container {
-            display: flex; gap: 30px; overflow-x: auto; padding: 40px 10px;
+        /* --- MÓDULOS (7 CARDS EM LINHA) --- */
+        .section-modules { padding: 60px 0; }
+        .modules-wrapper { 
+            display: flex; gap: 20px; overflow-x: auto; padding: 30px 10px;
             scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
         }
-        /* Esconder scrollbar no Chrome/Safari mas manter funcional */
-        .modules-container::-webkit-scrollbar { height: 6px; }
-        .modules-container::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
         .mod-card {
-            flex: 0 0 420px; /* BEM GRANDE */
-            background: var(--card); border: 1px solid #222; border-radius: 40px;
-            padding: 60px 40px; text-align: left; transition: 0.4s;
-            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            flex: 0 0 350px; background: var(--card); border: 1px solid #1a1a1a;
+            border-radius: 35px; padding: 50px 30px; transition: 0.3s;
         }
-        .mod-card:hover { border-color: var(--accent); transform: translateY(-10px); background: #141414; }
+        .mod-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        .emoji-img { width: 80px; height: 80px; margin-bottom: 25px; }
+        .mod-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
+        .mod-card p { font-size: 0.95rem; color: #555; line-height: 1.5; }
 
-        .emoji-img { width: 90px; height: 90px; margin-bottom: 30px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
-        .mod-card h3 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 15px; letter-spacing: -1px; text-transform: uppercase; }
-        .mod-card p { color: #888; font-size: 1.05rem; line-height: 1.6; }
+        /* --- FAQ --- */
+        .faq-section { padding: 100px 0; max-width: 900px; margin: 0 auto; }
+        .faq-item { background: #0a0a0a; border: 1px solid #222; border-radius: 20px; margin-bottom: 15px; overflow: hidden; }
+        .faq-question { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 700; }
+        .faq-answer { padding: 0 25px 25px; color: #777; display: none; }
 
-        /* --- VÍDEO --- */
-        .video-section { padding: 100px 0; background: rgba(0,0,0,0.3); }
-        .video-box {
-            max-width: 1000px; margin: 0 auto; background: #000; border: 1px solid #333;
-            border-radius: 50px; padding: 25px; box-shadow: 0 0 100px rgba(0,0,0,1);
-        }
-        .player-placeholder {
-            width: 100%; aspect-ratio: 16/9; background: #080808; border-radius: 30px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            border: 1px solid #1a1a1a; transition: 0.3s;
-        }
-        .player-placeholder:hover { border-color: var(--accent); }
-        .player-placeholder i { font-size: 5rem; color: var(--accent); }
+        /* --- VIDEO --- */
+        .video-box { background: #000; border: 1px solid #333; border-radius: 40px; padding: 20px; margin: 50px 0; }
+        .player { width: 100%; aspect-ratio: 16/9; background: #080808; border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* --- ÁREA DE CHECKOUT --- */
-        #checkout-area { display: none; padding: 100px 0; text-align: center; }
-        .checkout-card {
-            background: #fff; color: #000; padding: 80px 40px; border-radius: 60px;
-            max-width: 800px; margin: 0 auto;
-        }
-        .btn-black {
-            background: #000; color: #fff; padding: 25px 60px; border-radius: 20px;
-            font-size: 1.5rem; font-weight: 900; text-decoration: none; display: inline-block;
-            margin-top: 30px; border: none; cursor: pointer; text-transform: uppercase;
-        }
-
-        /* --- PÁGINA DE BEM-VINDO (PÓS-COMPRA) --- */
-        #portal-vip {
+        /* --- PORTAL DE BOAS-VINDAS (POS-COMPRA) --- */
+        #onboarding-portal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 99999; display: none; overflow-y: auto;
-            padding: 60px 20px;
+            background: #050505; z-index: 10000; display: none; overflow-y: auto; padding: 40px 20px;
         }
-        .portal-header { text-align: center; margin-bottom: 60px; }
-        .portal-header h1 { font-size: 3.5rem; letter-spacing: -3px; }
-        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .portal-item { background: #111; border: 1px solid #222; border-radius: 35px; padding: 40px; }
-        .welcome-video { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--accent); }
-
+        .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
+        .step-card { background: #111; border: 1px solid #222; padding: 35px; border-radius: 30px; }
+        .btn-tech { background: var(--accent); color: #000; padding: 18px 30px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; margin-top: 20px; border: none; cursor: pointer; }
+        .status-dot { width: 10px; height: 10px; background: #25d366; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #25d366; }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-
     <div class="container">
-        
         <section class="hero">
-            <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 70px; border-radius: 50%; border: 2px solid var(--accent); margin-bottom: 20px;">
-            <h1>BLACK OPS <span>ELITE</span></h1>
-            <p>O protocolo de inteligência que vai reconstruir sua percepção sobre lucro e escala. Role para baixo e acesse os módulos da operação.</p>
+            <h1>SISTEMA <span>THEUS</span></h1>
+            <p>A estrutura completa para sua operação digital. Veja abaixo os módulos configurados e o suporte técnico disponível.</p>
         </section>
 
         <section class="section-modules">
-            <div class="modules-container">
-                <div class="mod-card">
-                    <img src="emoji1.png" class="emoji-img">
-                    <h3>Protocolo de Base</h3>
-                    <p>A fundação inabalável para quem deseja operar no topo da cadeia do mercado digital.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji2.png" class="emoji-img">
-                    <h3>Arquitetura Tática</h3>
-                    <p>Como desenhar ofertas que ignoram a resistência do cliente e forçam a conversão.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji3.png" class="emoji-img">
-                    <h3>Engenharia de Lucro</h3>
-                    <p>Onde o dinheiro realmente é feito. Ajustes finos que multiplicam seu ROI em 10x.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji4.png" class="emoji-img">
-                    <h3>Escala Fantasma</h3>
-                    <p>O segredo para crescer sem ser notado pela concorrência. Domine o seu nicho em silêncio.</p>
-                </div>
-                <div class="mod-card">
-                    <img src="emoji5.png" class="emoji-img">
-                    <h3>Dominação Final</h3>
-                    <p>A transição de operador para dono da rede. Automação total da sua liberdade.</p>
-                </div>
+            <div class="modules-wrapper">
+                <div class="mod-card"> <img src="emoji1.png" class="emoji-img"> <h3>MÓDULO 01</h3> <p>Configuração inicial e mentalidade de negócio.</p> </div>
+                <div class="mod-card"> <img src="emoji2.png" class="emoji-img"> <h3>MÓDULO 02</h3> <p>Instalação das ferramentas e softwares necessários.</p> </div>
+                <div class="mod-card"> <img src="emoji3.png" class="emoji-img"> <h3>MÓDULO 03</h3> <p>Primeiros passos na operação prática.</p> </div>
+                <div class="mod-card"> <img src="emoji4.png" class="emoji-img"> <h3>MÓDULO 04</h3> <p>Otimização de processos e automação.</p> </div>
+                <div class="mod-card"> <img src="emoji5.png" class="emoji-img"> <h3>MÓDULO 05</h3> <p>Escalando o volume de operações diárias.</p> </div>
+                <div class="mod-card"> <img src="emoji6.png" class="emoji-img"> <h3>MÓDULO 06</h3> <p>Gestão financeira e reinvestimento tático.</p> </div>
+                <div class="mod-card"> <img src="emoji7.png" class="emoji-img"> <h3>MÓDULO 07</h3> <p>Manutenção e suporte de longo prazo.</p> </div>
             </div>
         </section>
 
-        <section class="video-section">
-            <div class="video-box">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 900; font-size: 0.7rem; letter-spacing: 2px; color: var(--accent);">
-                    <span>● CONEXÃO_ESTÁVEL</span>
-                    <span>SISTEMA: PRONTO</span>
-                </div>
-                <div class="player-placeholder" onclick="startTimer()">
-                    <i class="fa-solid fa-play"></i>
-                </div>
+        <div class="video-box">
+            <div class="player" onclick="revealCheckout()">
+                <i class="fa-solid fa-play" style="font-size: 5rem; color: var(--accent);"></i>
             </div>
-        </section>
-
-        <section id="checkout-area">
-            <div class="checkout-card">
-                <h2 style="font-size: 3rem; font-weight: 900; letter-spacing: -2px;">ACESSO AUTORIZADO</h2>
-                <p style="color: #666; font-size: 1.2rem; margin: 20px 0;">O bunker da elite está pronto para te receber.</p>
-                <div style="font-size: 4.5rem; font-weight: 900; color: var(--accent);">R$ 29,90</div>
-                <button onclick="showPortal()" class="btn-black">Entrar para a Elite Agora</button>
-            </div>
-        </section>
-
-    </div>
-
-    <div id="portal-vip">
-        <div class="portal-header">
-            <h1>O SUCESSO É UMA <span>DECISÃO.</span></h1>
-            <p style="color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-top: 10px;">VOCÊ FEZ A ESCOLHA CERTA. BEM-VINDO À OPERAÇÃO.</p>
         </div>
 
-        <div class="portal-grid">
-            <div class="portal-item">
-                <h3 style="margin-bottom: 20px; color: var(--accent);">SUA PRIMEIRA MISSÃO</h3>
-                <video class="welcome-video" autoplay muted controls>
-                    <source src="video-bem-vindo.mp4" type="video/mp4">
-                </video>
-                <p style="color: #888; font-size: 0.9rem;">Assista ao vídeo de integração ou prossiga para os módulos abaixo.</p>
-                <button class="btn-black" style="width: 100%; margin-top: 30px;">ACESSAR TODAS AS AULAS</button>
+        <section class="faq-section">
+            <h2 style="text-align: center; margin-bottom: 40px;">DÚVIDAS FREQUENTES</h2>
+            <div class="faq-item">
+                <div class="faq-question">Preciso de um computador potente? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Não. O sistema foi desenhado para rodar em qualquer dispositivo com acesso à internet.</div>
             </div>
+            <div class="faq-item">
+                <div class="faq-question">Como recebo o acesso? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Imediatamente após a confirmação, você será redirecionado para o painel de integração.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Tem suporte para iniciantes? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">Sim, temos técnicos e administradores disponíveis em horário comercial para te auxiliar.</div>
+            </div>
+        </section>
 
-            <div class="portal-item" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <h3 style="margin-bottom: 20px;">SEU SUPORTE TÁTICO</h3>
-                    <p style="color: #666; margin-bottom: 30px;">Não caminhe sozinho. Nossa equipe de elite está pronta para te auxiliar na implementação de cada estratégia.</p>
+        <div id="checkout-trigger" style="display: none; text-align: center; padding: 50px;">
+            <button onclick="simularCompra()" class="btn-tech" style="font-size: 1.5rem; padding: 25px 60px;">ADQUIRIR ACESSO AO SISTEMA</button>
+        </div>
+    </div>
+
+    <div id="onboarding-portal">
+        <div class="container" style="max-width: 1000px;">
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">SEJA BEM-VINDO.</h1>
+            <p style="color: #888;">Siga as instruções abaixo para começar sua configuração.</p>
+
+            <div class="step-grid">
+                <div class="step-card" style="grid-column: span 2;">
+                    <video style="width: 100%; border-radius: 20px; border: 1px solid #333;" controls autoplay muted>
+                        <source src="boas-vindas.mp4" type="video/mp4">
+                    </video>
+                    <h3 style="margin-top: 20px;">Instruções Iniciais</h3>
+                    <p style="color: #666;">Assista ao vídeo para entender como navegar no sistema.</p>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <a href="#" style="background: #25d366; color: #000; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 900;">WHATSAPP VIP</a>
-                    <a href="#" style="background: #0088cc; color: #fff; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 900;">COMUNIDADE TELEGRAM</a>
+
+                <div class="step-card">
+                    <h3 style="color: var(--accent);">PRÓXIMOS PASSOS</h3>
+                    <ul style="list-style: none; margin-top: 20px; color: #888; line-height: 2;">
+                        <li><i class="fa-solid fa-check color: var(--accent)"></i> Baixar o App Oficial</li>
+                        <li><i class="fa-solid fa-check"></i> Validar seu Token de Acesso</li>
+                        <li><i class="fa-solid fa-check"></i> Entrar no Grupo de Avisos</li>
+                    </ul>
+                    <a href="#" class="btn-tech" style="width: 100%; text-align: center;">BAIXAR APLICATIVO</a>
                 </div>
+
+                <div class="step-card">
+                    <h3>SUPORTE TÉCNICO</h3>
+                    <p style="color: #666; margin: 15px 0;">Fale agora com um de nossos administradores para tirar dúvidas técnicas.</p>
+                    <div style="margin-bottom: 20px;">
+                        <span class="status-dot"></span> <small>TÉCNICOS ONLINE AGORA</small>
+                    </div>
+                    <a href="https://wa.me/SEUNUMERO" class="btn-tech" style="background: #25d366; color: #fff; width: 100%; text-align: center;">FALAR COM ADMINISTRADOR</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <button onclick="document.getElementById('onboarding-portal').style.display='none'" style="background: none; border: none; color: #444; cursor: pointer; font-weight: 700;">SAIR DO PAINEL</button>
             </div>
         </div>
     </div>
@@ -197,20 +153,27 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // Timer do Vídeo (Configure para 1:18 ou o tempo que quiser)
-        function startTimer() {
-            alert("O vídeo começou. Aguarde o sinal para liberar o checkout.");
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Simulação do tempo do vídeo para liberar checkout
+        function revealCheckout() {
+            alert("O vídeo iniciou. O botão de compra aparecerá em breve.");
             setTimeout(() => {
-                const checkout = document.getElementById('checkout-area');
-                checkout.style.display = 'block';
-                lenis.scrollTo('#checkout-area', { lerp: 0.05 });
-            }, 3000); // 3 segundos para você testar, mude para 78000 para 1:18
+                document.getElementById('checkout-trigger').style.display = 'block';
+                lenis.scrollTo('#checkout-trigger');
+            }, 3000); // 3 segundos para teste
         }
 
-        // Abre o portal de boas-vindas elegante
-        function showPortal() {
-            document.getElementById('portal-vip').style.display = 'block';
-            gsap.from("#portal-vip", { opacity: 0, scale: 0.9, duration: 0.8, ease: "power4.out" });
+        // Simulação de Compra
+        function simularCompra() {
+            document.getElementById('onboarding-portal').style.display = 'block';
+            gsap.from(".step-card", { y: 50, opacity: 0, stagger: 0.1, duration: 1 });
         }
     </script>
 </body>
