@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Ops Elite | Theus Systems</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <style>
+        :root { 
+            --accent: #d4af37; 
+            --bg-page: #ececec; /* Cinza claro da Imagem 3 */
+            --card-dark: #161616; /* Preto dos cards */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: #000; padding: 25px; }
+
+        .dashboard {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 380px; gap: 25px;
+        }
+
+        /* --- LADO ESQUERDO --- */
+        .hero-banner {
+            background: #000; border-radius: 35px; padding: 70px 50px; color: #fff;
+            border: 1px solid #ddd; position: relative;
+        }
+        .hero-banner h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; }
+        .hero-banner h1 span { color: var(--accent); }
+        .hero-banner p { color: #888; margin: 20px 0; max-width: 480px; font-size: 1.1rem; }
+
+        .btn-gold {
+            background: var(--accent); color: #000; padding: 18px 45px; border-radius: 12px;
+            font-weight: 800; text-decoration: none; display: inline-block; text-transform: uppercase;
+        }
+
+        .section-title { font-weight: 900; text-transform: uppercase; margin: 35px 0 15px; font-size: 0.85rem; letter-spacing: 1px; }
+
+        /* GRID DE 5 MÓDULOS - USANDO SEUS ARQUIVOS */
+        .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        
+        .mod-card {
+            background: var(--card-dark); border-radius: 30px; padding: 45px 25px;
+            text-align: center; color: #fff; border: 1px solid #222; transition: 0.3s;
+        }
+        .mod-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        /* OS EMOJIS QUE VOCÊ ENVIOU */
+        .emoji-img { width: 90px; height: 90px; margin-bottom: 25px; object-fit: contain; }
+
+        .mod-card h3 { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; }
+        .mod-card p { color: #555; font-size: 0.85rem; line-height: 1.4; }
+
+        /* --- SIDEBAR (DIREITA) --- */
+        .sidebar { display: flex; flex-direction: column; gap: 25px; }
+        
+        .video-card {
+            background: #000; border-radius: 35px; padding: 30px; color: #fff; border: 1px solid #ddd;
+        }
+        .v-player {
+            width: 100%; aspect-ratio: 16/9; background: #0a0a0a; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; margin: 20px 0;
+            border: 1px solid #222; cursor: pointer;
+        }
+
+        .cronograma {
+            background: var(--card-dark); border-radius: 35px; padding: 35px; color: #fff;
+        }
+        .aula {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 0; border-bottom: 1px solid #222; color: #444; font-size: 0.9rem;
+        }
+        .aula.active { color: var(--accent); font-weight: bold; }
+
+        /* CHECKOUT */
+        #checkout-area {
+            display: none; grid-column: 1 / -1; background: #fff; padding: 60px;
+            border-radius: 35px; text-align: center; border: 1px solid #ddd; margin-top: 30px;
+        }
+
+        @media (max-width: 1100px) { .dashboard { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        
+        <div class="main-content">
+            <header class="hero-banner" data-aos="fade-up">
+                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 50px; margin-bottom: 20px; border-radius: 50%; border: 1px solid var(--accent);">
+                <h1>Black Ops <span>Elite</span></h1>
+                <p>O treinamento que redefine o jogo. Entre para o sistema, domine a operação e escale seus resultados hoje.</p>
+                <a href="#v-area" class="btn-gold">Entrar na Operação</a>
+            </header>
+
+            <h2 class="section-title">Modules Grid</h2>
+            <div class="modules-grid">
+                <div class="mod-card" data-aos="zoom-in">
+                    <img src="emoji1.PNG" class="emoji-img">
+                    <h3>VISÃO ESTRATÉGICA</h3>
+                    <p>Mentalidade de elite e foco no lucro.</p>
+                </div>
+                <div class="mod-card" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="emoji2.PNG" class="emoji-img">
+                    <h3>OPERAÇÃO BRUTA</h3>
+                    <p>Montagem da estrutura passo a passo.</p>
+                </div>
+                <div class="mod-card" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="emoji3.PNG" class="emoji-img">
+                    <h3>LUCRATIVIDADE</h3>
+                    <p>Otimização de processos e ganhos.</p>
+                </div>
+                <div class="mod-card" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="emoji4.PNG" class="emoji-img">
+                    <h3>CRIATIVOS BLACK</h3>
+                    <p>Ofertas impossíveis de ignorar.</p>
+                </div>
+                <div class="mod-card" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="emoji5.PNG" class="emoji-img">
+                    <h3>ESCALA INFINITA</h3>
+                    <p>Multiplicação do faturamento diário.</p>
+                </div>
+            </div>
+        </div>
+
+        <aside class="sidebar" id="v-area">
+            <div class="video-card" data-aos="fade-left">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 900; font-size: 0.8rem;">BLACK OPS ELITE</span>
+                    <span style="color: var(--accent); font-size: 0.7rem;">● VIP</span>
+                </div>
+                <div class="v-player" onclick="revealCheckout()">
+                    <i class="fa-solid fa-play" style="font-size: 3.5rem; color: var(--accent);"></i>
+                </div>
+                <p style="text-align: center; font-size: 0.75rem; color: #444;">Assista para liberar seu acesso</p>
+            </div>
+
+            <div class="cronograma" data-aos="fade-left" data-aos-delay="200">
+                <h3 style="font-size: 1rem; margin-bottom: 25px;">CONTEÚDO DO CURSO</h3>
+                <div class="aula active">01. Introdução ao Sistema <i class="fa-solid fa-circle-play"></i></div>
+                <div class="aula">02. A Brecha do Mercado <i class="fa-solid fa-lock"></i></div>
+                <div class="aula">03. Criação da Máquina <i class="fa-solid fa-lock"></i></div>
+                <div class="aula">04. Escala e Contingência <i class="fa-solid fa-lock"></i></div>
+            </div>
+        </aside>
+
+        <div id="checkout-area" data-aos="fade-up">
+            <h1 style="font-weight: 900;">ACESSO IMEDIATO</h1>
+            <p style="margin: 15px 0 30px; color: #666;">Garanta sua vaga na elite por apenas R$ 29,90</p>
+            <a href="SEU_LINK_AQUI" class="btn-gold" style="background: #000; color: #fff; padding: 25px 80px; font-size: 1.2rem;">QUERO MINHA VAGA</a>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        function revealCheckout() {
+            document.getElementById('checkout-area').style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
