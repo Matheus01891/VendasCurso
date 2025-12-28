@@ -15,196 +15,159 @@
     <style>
         :root { 
             --accent: #d4af37; 
-            --bg-page: #0a0a0a; /* Escureci para dar mais autoridade */
-            --card-dark: #121212;
-            --text-gray: #888;
+            --bg-page: #050505; 
+            --card-dark: #0f0f0f;
+            --text-gold: #c5a02e;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: #fff; overflow-x: hidden; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        /* --- HEADER / TRUST BAR --- */
-        .trust-bar {
-            background: #111; padding: 10px 0; text-align: center;
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
-            color: var(--accent); border-bottom: 1px solid #222;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
 
         /* --- HERO --- */
         .section-hero {
-            min-height: 90vh; display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
 
-        .hero-banner {
-            background: linear-gradient(145deg, #000, #111);
-            border-radius: 40px; padding: 80px 40px; text-align: center;
-            border: 1px solid #333; width: 100%; position: relative;
-            overflow: hidden;
-        }
+        .hero-banner h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -4px; line-height: 0.9; }
+        .hero-banner h1 span { color: var(--accent); text-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+        .hero-banner p { color: #555; margin: 30px auto; max-width: 700px; font-size: 1.3rem; font-weight: 500; letter-spacing: 1px; }
 
-        /* Efeito de radar no fundo do hero */
-        .hero-banner::after {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%);
-            transform: translate(-50%, -50%); z-index: 0;
+        /* Indicador de Scroll Nobre */
+        .scroll-indicator {
+            margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+            color: var(--accent); font-size: 0.7rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase;
         }
+        .mouse { width: 20px; height: 35px; border: 2px solid var(--accent); border-radius: 20px; position: relative; }
+        .mouse::before { content: ''; position: absolute; top: 5px; left: 50%; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); animation: scroll 2s infinite; }
+        @keyframes scroll { 0% { opacity: 1; top: 5px; } 100% { opacity: 0; top: 25px; } }
 
-        .hero-banner h1 { font-size: 4rem; font-weight: 900; letter-spacing: -3px; z-index: 1; position: relative; }
-        .hero-banner h1 span { color: var(--accent); }
-        .hero-banner p { color: var(--text-gray); margin: 25px auto; max-width: 600px; font-size: 1.2rem; z-index: 1; position: relative; }
-
-        /* --- MÓDULOS EM LINHA NO TOPO --- */
-        .section-modules { padding: 40px 0; overflow: hidden; }
-        .modules-grid { 
-            display: flex; /* Alinhados em uma linha */
-            gap: 20px;
-            padding: 20px 0;
-            perspective: 1000px;
+        /* --- MÓDULOS (ESTILO OXBAR - LINHA ÚNICA) --- */
+        .section-modules { padding: 100px 0; }
+        .modules-wrapper { 
+            display: flex; gap: 25px; overflow-x: auto; padding: 40px 0;
+            scrollbar-width: none; -ms-overflow-style: none;
         }
+        .modules-wrapper::-webkit-scrollbar { display: none; }
         
         .mod-card {
-            flex: 0 0 280px; /* Largura fixa para caber na linha */
-            background: var(--card-dark); border-radius: 25px; padding: 35px 20px;
-            text-align: center; border: 1px solid #222;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; transform: translateY(50px) scale(0.9);
+            flex: 0 0 380px; /* Card maior e robusto */
+            background: var(--card-dark); border-radius: 40px; padding: 60px 40px;
+            text-align: center; border: 1px solid #1a1a1a;
+            transition: all 0.5s ease; position: relative;
         }
-
-        .mod-card:hover { border-color: var(--accent); background: #1a1a1a; }
-        .emoji-img { width: 70px; height: 70px; margin-bottom: 20px; }
-        .mod-card h3 { font-size: 0.9rem; font-weight: 900; color: var(--accent); margin-bottom: 10px; }
-        .mod-card p { font-size: 0.8rem; color: #666; line-height: 1.5; }
-
-        /* --- SEÇÃO DE PROVA SOCIAL (NOVA) --- */
-        .trust-section {
-            padding: 60px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
-            text-align: center;
-        }
-        .trust-item i { color: var(--accent); font-size: 2rem; margin-bottom: 15px; }
-        .trust-item h4 { font-weight: 900; margin-bottom: 5px; }
-        .trust-item p { color: var(--text-gray); font-size: 0.85rem; }
+        .mod-card:hover { border-color: var(--accent); background: #141414; transform: translateY(-10px); }
+        
+        .emoji-img { width: 100px; height: 100px; margin-bottom: 30px; object-fit: contain; }
+        .mod-card h3 { font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 15px; letter-spacing: -1px; }
+        .mod-card p { font-size: 1rem; color: #666; line-height: 1.6; font-weight: 400; }
 
         /* --- VÍDEO --- */
         .section-video { padding: 100px 0; }
         .video-card {
-            background: #000; border-radius: 35px; padding: 40px; border: 1px solid #333;
-            max-width: 900px; margin: 0 auto; box-shadow: 0 0 50px rgba(0,0,0,1);
+            background: #000; border-radius: 50px; padding: 20px; border: 1px solid #222;
+            max-width: 1000px; margin: 0 auto; box-shadow: 0 50px 100px rgba(0,0,0,0.5);
         }
         .v-player {
-            width: 100%; aspect-ratio: 16/9; background: #050505; border-radius: 20px;
-            display: flex; align-items: center; justify-content: center; margin: 25px 0;
-            border: 1px solid #222; cursor: pointer; position: relative;
+            width: 100%; aspect-ratio: 16/9; background: #050505; border-radius: 35px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
-        /* Pulsação no botão de play */
-        .fa-play { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* --- CHECKOUT --- */
+        /* --- CHECKOUT (GATILHO NOVO) --- */
         #checkout-area {
-            display: none; background: #fff; border-radius: 40px; padding: 80px 20px;
-            text-align: center; border: 1px solid #ddd; margin: 50px 0; color: #000;
+            display: none; padding: 120px 20px; text-align: center;
         }
-
-        .btn-gold {
-            background: var(--accent); color: #000; padding: 20px 50px; border-radius: 15px;
+        .checkout-box {
+            background: #fff; color: #000; padding: 80px 40px; border-radius: 50px;
+            max-width: 800px; margin: 0 auto;
+        }
+        .btn-elite {
+            background: #000; color: #fff; padding: 25px 60px; border-radius: 20px;
             font-weight: 900; text-decoration: none; display: inline-block;
-            text-transform: uppercase; border: none; cursor: pointer;
+            font-size: 1.5rem; transition: 0.3s;
         }
+        .btn-elite:hover { transform: scale(1.05); }
 
-        @media (max-width: 768px) {
-            .modules-grid { overflow-x: auto; padding-bottom: 30px; }
-            .hero-banner h1 { font-size: 2.5rem; }
-            .trust-section { grid-template-columns: 1fr; }
+        /* --- PÁGINA DE BEM-VINDO (MODAL) --- */
+        #welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: none;
+            align-items: center; justify-content: center; text-align: center; padding: 40px;
         }
+        .welcome-content h1 { font-size: 3.5rem; margin-bottom: 20px; letter-spacing: -2px; }
+        .welcome-content p { font-size: 1.4rem; color: var(--accent); max-width: 600px; margin: 0 auto 40px; font-weight: 600; }
+
     </style>
 </head>
 <body>
 
-    <div class="trust-bar">● CONEXÃO ENCRIPTADA ● ACESSO IMEDIATO ● VAGAS LIMITADAS</div>
-
     <div class="container">
-        
         <section class="section-hero">
-            <header class="hero-banner">
-                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 70px; margin-bottom: 20px; border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(212,175,55,0.3);">
-                <h1>Black Ops <span>Elite</span></h1>
-                <p>O submundo do faturamento revelado. Entre no protocolo e escale sua operação com as táticas da elite.</p>
-                <button onclick="scrollToVideo()" class="btn-gold">Iniciar Protocolo</button>
-            </header>
+            <div class="hero-banner">
+                <img src="https://i.postimg.cc/bvHmRp0J/Foto-Redonda.jpg" style="width: 80px; margin-bottom: 30px; border-radius: 50%; border: 3px solid var(--accent);">
+                <h1>ORDEM <br> <span>BLACK OPS</span></h1>
+                <p>Onde o silêncio opera e a escala é inevitável. Você está diante do protocolo de inteligência que separa amadores de operadores de elite.</p>
+                <div class="scroll-indicator">
+                    <div class="mouse"></div>
+                    AUTORIZAR ACESSO
+                </div>
+            </div>
         </section>
 
         <section class="section-modules">
-            <h2 style="font-size: 0.8rem; letter-spacing: 4px; color: #444; text-align: center; margin-bottom: 30px;">CONTEÚDO DA OPERAÇÃO</h2>
-            <div class="modules-grid">
+            <div class="modules-wrapper">
                 <div class="mod-card">
                     <img src="emoji1.png" class="emoji-img">
-                    <h3>VISÃO ESTRATÉGICA</h3>
-                    <p>O mindset necessário para não quebrar no primeiro mês.</p>
+                    <h3>PROTOCOLO ZERO</h3>
+                    <p>A calibração necessária para suportar o peso das decisões de alto nível.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji2.png" class="emoji-img">
-                    <h3>OPERAÇÃO BRUTA</h3>
-                    <p>Logística pesada. Como montar o bunker de vendas.</p>
+                    <h3>ESTRUTURA FANTASMA</h3>
+                    <p>Arquitetura invisível por trás das maiores operações do mercado atual.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji3.png" class="emoji-img">
-                    <h3>LUCRATIVIDADE</h3>
-                    <p>Não é sobre quanto entra, é sobre quanto sobra.</p>
+                    <h3>ALAVANCAGEM</h3>
+                    <p>Onde o esforço mínimo encontra a máxima conversão de domínio.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji4.png" class="emoji-img">
-                    <h3>CRIATIVOS BLACK</h3>
-                    <p>Scripts que forçam o clique e hipnotizam o cliente.</p>
+                    <h3>INFLUÊNCIA NEGRA</h3>
+                    <p>Engenharia de percepção aplicada a ativos digitais de alto valor.</p>
                 </div>
                 <div class="mod-card">
                     <img src="emoji5.png" class="emoji-img">
-                    <h3>ESCALA INFINITA</h3>
-                    <p>Onde os grandes jogam. O segredo da escala real.</p>
+                    <h3>DOMÍNIO ABSOLUTO</h3>
+                    <p>A transição final para o topo da cadeia. Expansão sem limites.</p>
                 </div>
             </div>
         </section>
-
-        <div class="trust-section">
-            <div class="trust-item">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h4>Segurança Total</h4>
-                <p>Plataforma 100% segura e acesso liberado em 30 segundos.</p>
-            </div>
-            <div class="trust-item">
-                <i class="fa-solid fa-bolt"></i>
-                <h4>Método Validado</h4>
-                <p>Táticas testadas no campo de batalha com resultados reais.</p>
-            </div>
-            <div class="trust-item">
-                <i class="fa-solid fa-headset"></i>
-                <h4>Suporte Tático</h4>
-                <p>Time especializado para garantir sua escala 24/7.</p>
-            </div>
-        </div>
 
         <section class="section-video" id="v-area">
             <div class="video-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: 1px;">ENCRYPTED_VIDEO.MP4</span>
-                    <span style="color: var(--accent); font-size: 0.7rem; font-weight: 900;">STATUS: READY</span>
+                <div class="v-player" onclick="startVideoTimer()">
+                    <i class="fa-solid fa-play" style="font-size: 5rem; color: var(--accent);"></i>
                 </div>
-                <div class="v-player" onclick="revealCheckout()">
-                    <i class="fa-solid fa-play" style="font-size: 4rem; color: var(--accent);"></i>
-                </div>
-                <p style="color: #666; font-size: 0.7rem; text-align: center; text-transform: uppercase;">Aperte para descriptografar os módulos</p>
             </div>
         </section>
 
-        <div id="checkout-area">
-            <h1 style="font-weight: 900; font-size: 3rem; letter-spacing: -2px;">ACESSO CONCEDIDO</h1>
-            <p style="margin: 15px 0 35px; color: #444; font-size: 1.2rem;">Entre para a unidade <b>Elite</b> por apenas <b>R$ 29,90</b></p>
-            <a href="https://SEU_LINK_AQUI" class="btn-gold" style="background: #000; color: #fff; padding: 25px 60px; font-size: 1.4rem; box-shadow: 0 15px 30px rgba(0,0,0,0.4);">RECLAMAR MINHA VAGA</a>
-            <div style="margin-top: 30px;">
-                <img src="https://i.postimg.cc/mD3fDTVG/compra-segura.png" style="width: 200px; opacity: 0.5;"> </div>
-        </div>
+        <section id="checkout-area">
+            <div class="checkout-box">
+                <h2 style="font-weight: 900; font-size: 2.5rem; margin-bottom: 10px;">PROTOCOLO LIBERADO</h2>
+                <p style="margin-bottom: 40px; font-weight: 600; color: #555;">Você foi selecionado para o próximo nível. Prossiga para o bunker.</p>
+                <button onclick="buyAccess()" class="btn-elite">GARANTIR MEU LUGAR NA ELITE</button>
+            </div>
+        </section>
+    </div>
 
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <h1>BEM-VINDO, CHEFE.</h1>
+            <p>Você tomou a decisão correta. Agora vamos ao que interessa: o dinheiro no bolso e a vida que você buscou.</p>
+            <button onclick="closeWelcome()" class="btn-elite" style="background: var(--accent); color: #000;">COMEÇAR AGORA</button>
+        </div>
     </div>
 
     <script>
@@ -214,29 +177,46 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
-        // Animação dos Cards em Linha com efeito 3D
-        gsap.to(".mod-card", {
+        // Animação dos Cards (GSAP para aparecerem na linha)
+        gsap.from(".mod-card", {
             scrollTrigger: {
-                trigger: ".section-modules",
-                start: "top 80%",
-                toggleActions: "play none none none"
+                trigger: ".modules-wrapper",
+                start: "top 70%",
             },
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotateX: 0,
-            duration: 0.8,
-            stagger: 0.15, // Um por um para dar o efeito realista
-            ease: "back.out(1.7)"
+            opacity: 0,
+            x: 100,
+            stagger: 0.2,
+            duration: 1,
+            ease: "power4.out"
         });
 
-        function scrollToVideo() { lenis.scrollTo('#v-area'); }
+        // Função de timer do vídeo (Simulando 1m 18s)
+        function startVideoTimer() {
+            alert("O vídeo começou. O botão de acesso aparecerá no momento certo da revelação.");
+            
+            // Defina aqui o tempo em milissegundos (ex: 1m 18s = 78000ms)
+            const videoTime = 78000; 
 
-        function revealCheckout() {
-            const checkout = document.getElementById('checkout-area');
-            checkout.style.display = 'block';
-            gsap.from(checkout, { opacity: 0, y: 50, duration: 1 });
-            setTimeout(() => { lenis.scrollTo('#checkout-area'); }, 100);
+            setTimeout(() => {
+                const checkout = document.getElementById('checkout-area');
+                checkout.style.display = 'block';
+                lenis.scrollTo('#checkout-area');
+                gsap.from(".checkout-box", { scale: 0.8, opacity: 0, duration: 1.5, ease: "elastic.out(1, 0.5)" });
+            }, 3000); // Coloquei 3 segundos só pra você testar agora!
+        }
+
+        // Simulação de Compra -> Bem-vindo
+        function buyAccess() {
+            document.getElementById('welcome-screen').style.display = 'flex';
+            gsap.from(".welcome-content", { y: 100, opacity: 0, duration: 1 });
+        }
+
+        function closeWelcome() {
+            document.getElementById('welcome-screen').style.display = 'none';
+        }
+
+        function closeWelcome() {
+            window.location.href = "LINK_DO_SEU_CURSO_AQUI";
         }
     </script>
 </body>
